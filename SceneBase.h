@@ -16,4 +16,11 @@ public:
 
 	// シーン終了
 	virtual bool isEnd() { return false; }
+
+	int TEffectsHandle1;// 選択音のハンドル
+	int TEffectsHandle2;// 決定音のハンドル
+	int TEffectsHandle3;// キャンセル音のハンドル
+
+
+
 };

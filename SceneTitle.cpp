@@ -48,9 +48,7 @@ void SceneTitle::init()
 
 SceneBase* SceneTitle::update()
 {
-	int TEffectsHandle1;// 選択音のハンドル
-	int TEffectsHandle2;// 決定音のハンドル
-	int TEffectsHandle3;// キャンセル音のハンドル
+	
 
 	TEffectsHandle1 = LoadSoundMem("soundEffect/選択音.wav");
 	TEffectsHandle2 = LoadSoundMem("soundEffect/決定音.wav");

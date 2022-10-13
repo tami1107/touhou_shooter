@@ -42,13 +42,9 @@ void SceneMusic::init()
 SceneBase* SceneMusic::update()
 {
 
-	int TMffectsHandle1;// 選択音のハンドル
-	int TMffectsHandle2;// 決定音のハンドル
-	int TMffectsHandle3;// キャンセル音のハンドル
-
-	TMffectsHandle1 = LoadSoundMem("soundEffect/選択音.wav");
-	TMffectsHandle2 = LoadSoundMem("soundEffect/決定音.wav");
-	TMffectsHandle3 = LoadSoundMem("soundEffect/キャンセル音.wav");
+	TEffectsHandle1 = LoadSoundMem("soundEffect/選択音.wav");
+	TEffectsHandle2 = LoadSoundMem("soundEffect/決定音.wav");
+	TEffectsHandle3 = LoadSoundMem("soundEffect/キャンセル音.wav");
 
 	int padState = 0;
 
@@ -63,18 +59,18 @@ SceneBase* SceneMusic::update()
 		if ((padState & PAD_INPUT_DOWN) && (m_MInterval <= 0))
 		{
 			m_SoundSelect = (m_SoundSelect + 1) % kTitle; // 現在の選択項目を一つ下にずらす(ループする)
-			PlaySoundMem(TMffectsHandle1, DX_PLAYTYPE_BACK);
+			PlaySoundMem(TEffectsHandle1, DX_PLAYTYPE_BACK);
 			m_MInterval = kMInterval;
 		}
 		if ((padState & PAD_INPUT_UP) && (m_MInterval <= 0))
 		{
 			m_SoundSelect = (m_SoundSelect + (kTitle - 1)) % kTitle; // 現在の選択項目を一つ上にずらす(逆ループする)
-			PlaySoundMem(TMffectsHandle1, DX_PLAYTYPE_BACK);
+			PlaySoundMem(TEffectsHandle1, DX_PLAYTYPE_BACK);
 			m_MInterval = kMInterval;
 		}
 		if ((padState & PAD_INPUT_4) && (m_MInterval <= 0))
 		{
-			PlaySoundMem(TMffectsHandle2, DX_PLAYTYPE_BACK);
+			PlaySoundMem(TEffectsHandle2, DX_PLAYTYPE_BACK);
 			if (m_SoundSelect == 0)
 			{// 4ボタンが押された瞬間だけ処理
 				if (CheckSoundFile() == 0)
@@ -106,7 +102,7 @@ SceneBase* SceneMusic::update()
 		}
 		if ((padState & PAD_INPUT_3) && (m_MInterval <= 0))
 		{
-			PlaySoundMem(TMffectsHandle3, DX_PLAYTYPE_BACK);
+			PlaySoundMem(TEffectsHandle3, DX_PLAYTYPE_BACK);
 			// Titleに切り替え
 			return(new SceneTitle);
 			m_MInterval = kMInterval;
