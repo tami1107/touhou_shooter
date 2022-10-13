@@ -24,7 +24,8 @@ private:
 	
 	int m_SoundSelect;
 	int m_MInterval;
-	
+	int m_GHandle1;
+	int m_GHandle2;
 
 	bool m_isEnd;
 };

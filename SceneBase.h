@@ -4,7 +4,16 @@
 class SceneBase
 {
 public:
-	SceneBase() {}
+	SceneBase() 
+	{
+
+
+		int m_EffectsHandle1 = 0;// 選択音のハンドル
+		int m_EffectsHandle2 = 0;// 決定音のハンドル
+		int m_EffectsHandle3 = 0;// キャンセル音のハンドル
+
+		int kTInterval = 15;
+	}
 	virtual ~SceneBase() {}
 
 
@@ -17,10 +26,11 @@ public:
 	// シーン終了
 	virtual bool isEnd() { return false; }
 
-	int TEffectsHandle1;// 選択音のハンドル
-	int TEffectsHandle2;// 決定音のハンドル
-	int TEffectsHandle3;// キャンセル音のハンドル
 
+	int m_EffectsHandle1;// 選択音のハンドル
+	int m_EffectsHandle2;// 決定音のハンドル
+	int m_EffectsHandle3;// キャンセル音のハンドル
 
+	int kTInterval = 15;
 
 };

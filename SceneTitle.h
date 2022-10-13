@@ -25,7 +25,9 @@ private:
 	// テキスト表示位置変更
 	int m_SelectNum;
 	int m_Interval;
+	int m_slide;
 
+	int m_BgmHandle1;
 
 	bool m_isEnd;
 };

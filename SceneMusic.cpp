@@ -7,10 +7,8 @@
 namespace
 {
 	
-	constexpr int kMInterval = 15;
 
-	int GHandle1;
-	int GHandle2;
+	
 
 	constexpr int kTitle = 2;
 }
@@ -35,16 +33,16 @@ void SceneMusic::init()
 {
 
 	m_SoundSelect = 0;
-	m_MInterval = kMInterval;
+	m_MInterval = kTInterval;
 	m_isEnd = false;
 }
 
 SceneBase* SceneMusic::update()
 {
 
-	TEffectsHandle1 = LoadSoundMem("soundEffect/選択音.wav");
-	TEffectsHandle2 = LoadSoundMem("soundEffect/決定音.wav");
-	TEffectsHandle3 = LoadSoundMem("soundEffect/キャンセル音.wav");
+	m_EffectsHandle1 = LoadSoundMem("soundEffect/選択音.wav");
+	m_EffectsHandle2 = LoadSoundMem("soundEffect/決定音.wav");
+	m_EffectsHandle3 = LoadSoundMem("soundEffect/キャンセル音.wav");
 
 	int padState = 0;
 
@@ -59,18 +57,18 @@ SceneBase* SceneMusic::update()
 		if ((padState & PAD_INPUT_DOWN) && (m_MInterval <= 0))
 		{
 			m_SoundSelect = (m_SoundSelect + 1) % kTitle; // 現在の選択項目を一つ下にずらす(ループする)
-			PlaySoundMem(TEffectsHandle1, DX_PLAYTYPE_BACK);
-			m_MInterval = kMInterval;
+			PlaySoundMem(m_EffectsHandle1, DX_PLAYTYPE_BACK);
+			m_MInterval = kTInterval;
 		}
 		if ((padState & PAD_INPUT_UP) && (m_MInterval <= 0))
 		{
 			m_SoundSelect = (m_SoundSelect + (kTitle - 1)) % kTitle; // 現在の選択項目を一つ上にずらす(逆ループする)
-			PlaySoundMem(TEffectsHandle1, DX_PLAYTYPE_BACK);
-			m_MInterval = kMInterval;
+			PlaySoundMem(m_EffectsHandle1, DX_PLAYTYPE_BACK);
+			m_MInterval = kTInterval;
 		}
 		if ((padState & PAD_INPUT_4) && (m_MInterval <= 0))
 		{
-			PlaySoundMem(TEffectsHandle2, DX_PLAYTYPE_BACK);
+			PlaySoundMem(m_EffectsHandle2, DX_PLAYTYPE_BACK);
 			if (m_SoundSelect == 0)
 			{// 4ボタンが押された瞬間だけ処理
 				if (CheckSoundFile() == 0)
@@ -98,14 +96,14 @@ SceneBase* SceneMusic::update()
 			
 			}
 
-			m_MInterval = kMInterval;
+			m_MInterval = kTInterval;
 		}
 		if ((padState & PAD_INPUT_3) && (m_MInterval <= 0))
 		{
-			PlaySoundMem(TEffectsHandle3, DX_PLAYTYPE_BACK);
+			PlaySoundMem(m_EffectsHandle3, DX_PLAYTYPE_BACK);
 			// Titleに切り替え
 			return(new SceneTitle);
-			m_MInterval = kMInterval;
+			m_MInterval = kTInterval;
 		}
 
 		
@@ -135,16 +133,16 @@ SceneBase* SceneMusic::update()
 
 void SceneMusic::draw()
 {
-	GHandle1 = LoadGraph("image/レミリア_通常.png");
-	GHandle2 = LoadGraph("image/フラン_通常.png");
+	m_GHandle1 = LoadGraph("image/レミリア_通常.png");
+	m_GHandle2 = LoadGraph("image/フラン_通常.png");
 
 	if (m_SoundSelect == 0)
 	{
-		DrawExtendGraph(300, 0, 640, 480, GHandle1, TRUE);
+		DrawExtendGraph(300, 0, 640, 480, m_GHandle1, TRUE);
 	}
 	if (m_SoundSelect == 1)
 	{
-		DrawExtendGraph(300, 0, 640, 480, GHandle2, TRUE);
+		DrawExtendGraph(300, 0, 640, 480, m_GHandle2, TRUE);
 	}
 
 

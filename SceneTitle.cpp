@@ -8,30 +8,26 @@
 
 namespace
 {
-	// 停止したショットを再度打ち出すまでの時間
-	constexpr int kTInterval = 15;
 	// タイトルの個数
 	constexpr int kTitle = 5;
-
-	
 }
-
-
 
 // メニュー項目の表示に必要な構造体を用意する
 typedef struct {
 	int x, y;       // 座標格納用変数
 	char name[128]; // 項目名格納用変数
-	int Cr;
+	int Cr;			// カラー用変数
 } MenuElement_t;
 
 // メニュー項目要素を5つ作る
 MenuElement_t MenuElement[kTitle] = {
-		{ 380, 100, "ゲームスタート" , GetColor(255, 0, 0)}, // タグの中身の順番で格納される。xに80が、yに100が、nameに"ゲームスタート"が
-		{ 370, 170, "MusicRoom", GetColor(255, 255, 255)},
-		{ 360, 240, "ヘルプ", GetColor(255, 255, 255)},
-		{ 350, 310, "コンフィグ", GetColor(255, 255, 255)},
-		{ 340, 380, "ゲーム終了", GetColor(255, 255, 255)},
+	// タグの中身の順番で格納される。
+	// (例) { x , y , "neme" , GetColor(255, 255, 255)}
+	{ 380, 100, "ゲームスタート" , GetColor(255, 0, 0)},
+	{ 370, 170, "MusicRoom", GetColor(255, 255, 255)},
+	{ 360, 240, "ヘルプ", GetColor(255, 255, 255)},
+	{ 350, 310, "コンフィグ", GetColor(255, 255, 255)},
+	{ 340, 380, "ゲーム終了", GetColor(255, 255, 255)},
 };
 
 
@@ -40,7 +36,8 @@ void SceneTitle::init()
 	m_SelectNum = 0; // 現在の選択番号
 	m_Interval = kTInterval;
 
-	PlaySoundFile("soundBgm/赤より紅い夢.wav",DX_PLAYTYPE_LOOP);
+	m_BgmHandle1= LoadSoundMem("soundBgm/赤より紅い夢.wav", DX_PLAYTYPE_LOOP);
+	//PlaySoundFile("soundBgm/赤より紅い夢.wav",DX_PLAYTYPE_LOOP);
 	
 	m_isEnd = false;
 }
@@ -50,17 +47,16 @@ SceneBase* SceneTitle::update()
 {
 	
 
-	TEffectsHandle1 = LoadSoundMem("soundEffect/選択音.wav");
-	TEffectsHandle2 = LoadSoundMem("soundEffect/決定音.wav");
-	TEffectsHandle3 = LoadSoundMem("soundEffect/キャンセル音.wav");
+	m_EffectsHandle1 = LoadSoundMem("soundEffect/選択音.wav");
+	m_EffectsHandle2 = LoadSoundMem("soundEffect/決定音.wav");
+	m_EffectsHandle3 = LoadSoundMem("soundEffect/キャンセル音.wav");
 
 	
 
-	int padState = 0;
+	
+	
 
-	int slide;
-
-	padState = GetJoypadInputState( DX_INPUT_KEY_PAD1 ) ;
+	int padState = GetJoypadInputState( DX_INPUT_KEY_PAD1 ) ;
 
 
 	// 計算フェーズ 
@@ -72,18 +68,18 @@ SceneBase* SceneTitle::update()
 		 if ((padState & PAD_INPUT_DOWN) && (m_Interval <= 0))
 		 {
 			 m_SelectNum = (m_SelectNum + 1) % kTitle; // 現在の選択項目を一つ下にずらす(ループする)
-			 PlaySoundMem(TEffectsHandle1, DX_PLAYTYPE_BACK);
+			 PlaySoundMem(m_EffectsHandle1, DX_PLAYTYPE_BACK);
 			 m_Interval = kTInterval;
 		 }
 		 if ((padState & PAD_INPUT_UP) && (m_Interval <= 0))
 		 {
 			 m_SelectNum = (m_SelectNum + (kTitle-1)) % kTitle; // 現在の選択項目を一つ上にずらす(逆ループする)
-			 PlaySoundMem(TEffectsHandle1, DX_PLAYTYPE_BACK);
+			 PlaySoundMem(m_EffectsHandle1, DX_PLAYTYPE_BACK);
 			 m_Interval = kTInterval;
 		 }
 		 if ((padState & PAD_INPUT_4) && (m_Interval <= 0))
 		 {
-			 PlaySoundMem(TEffectsHandle2, DX_PLAYTYPE_BACK);
+			 PlaySoundMem(m_EffectsHandle2, DX_PLAYTYPE_BACK);
 
 			 if (m_SelectNum == 0)
 			 {// 4ボタンが押された瞬間だけ処理
@@ -94,7 +90,7 @@ SceneBase* SceneTitle::update()
 
 			 if (m_SelectNum == 1)
 			 {// 4ボタンが押された瞬間だけ処理
-				StopSoundFile();
+				StopSoundMem(m_BgmHandle1);
 				// Musicに切り替え
 				return(new SceneMusic);
 			 }
@@ -112,7 +108,7 @@ SceneBase* SceneTitle::update()
 			
 			 m_SelectNum = 4;
 			 
-			 PlaySoundMem(TEffectsHandle3, DX_PLAYTYPE_BACK);
+			 PlaySoundMem(m_EffectsHandle3, DX_PLAYTYPE_BACK);
 			 m_Interval = kTInterval;
 		 }
 	 }
@@ -124,14 +120,14 @@ SceneBase* SceneTitle::update()
 		 {   
 			 
 			 // メニュー項目数である5個ループ処理
-			 slide = i * 10;
+			 m_slide = i * 10;
 			
 			 if (i == m_SelectNum) {          // 今処理しているのが、選択番号と同じ要素なら
-				 MenuElement[i].x = (360 - slide); // 座標を80にする
+				 MenuElement[i].x = (360 - m_slide); // 座標を80にする
 				 MenuElement[i].Cr = GetColor(255, 0, 0);
 			 }
 			 else {                       // 今処理しているのが、選択番号以外なら
-				 MenuElement[i].x = 380- slide;// 座標を100にする
+				 MenuElement[i].x = 380- m_slide;// 座標を100にする
 				 MenuElement[i].Cr = GetColor(255, 255, 255);
 			 }
 		 }
