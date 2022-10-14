@@ -143,12 +143,15 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneBase.cpp" />
+    <ClCompile Include="SceneConfig.cpp" />
     <ClCompile Include="SceneMain.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneMusic.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="SelectChara.cpp" />
     <ClCompile Include="ShotBase.cpp" />
+    <ClCompile Include="ShotNormal.cpp" />
+    <ClCompile Include="ShotPlayerNormal.cpp" />
     <ClCompile Include="Vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -156,12 +159,15 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SceneBase.h" />
+    <ClInclude Include="SceneConfig.h" />
     <ClInclude Include="SceneMain.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SceneMusic.h" />
     <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="SelectChara.h" />
     <ClInclude Include="ShotBase.h" />
+    <ClInclude Include="ShotNormal.h" />
+    <ClInclude Include="ShotPlayerNormal.h" />
     <ClInclude Include="Vec2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

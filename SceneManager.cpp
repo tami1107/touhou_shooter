@@ -5,6 +5,7 @@
 #include "SceneMain.h"
 #include "SceneMusic.h"
 #include "SelectChara.h"
+#include "SceneConfig.h"
 
 
 SceneManager::SceneManager()

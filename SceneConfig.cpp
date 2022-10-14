@@ -1,14 +1,14 @@
 #include "DxLib.h"
 #include "SceneMain.h"
-#include "SceneMusic.h"
+#include "SceneConfig.h"
 #include "SceneTitle.h"
 
 
 namespace
 {
-	
 
-	
+
+
 
 	constexpr int kTitle = 2;
 }
@@ -19,17 +19,17 @@ typedef struct {
 	int x, y;       // 座標格納用変数
 	char name[128]; // 項目名格納用変数
 	int Cr;
-} MenuElement_m;
+} MenuElement_c;
 
 // メニュー項目要素を3つ作る
-MenuElement_m MenuElement[kTitle] = {
-		{  80, 100, "亡き王女の為のセプテット" ,GetColor(255, 0, 0) }, // タグの中身の順番で格納される。xに80が、yに100が、nameに"ゲームスタート"が
-		{ 100, 150, "UN.オーエンは彼女なのか" ,GetColor(255, 255, 255)},
-	
+MenuElement_c MenuElement[kTitle] = {
+		{  80, 100, "Windowモード" ,GetColor(255, 0, 0) }, // タグの中身の順番で格納される。xに80が、yに100が、nameに"ゲームスタート"が
+		{ 100, 150, "フルスクリーン" ,GetColor(255, 255, 255)},
+
 };
 
 
-void SceneMusic::init()
+void SceneConfig::init()
 {
 
 	m_SoundSelect = 0;
@@ -37,7 +37,7 @@ void SceneMusic::init()
 	m_isEnd = false;
 }
 
-SceneBase* SceneMusic::update()
+SceneBase* SceneConfig::update()
 {
 
 	m_EffectsHandle1 = LoadSoundMem("soundEffect/選択音.wav");
@@ -71,29 +71,14 @@ SceneBase* SceneMusic::update()
 			PlaySoundMem(m_EffectsHandle2, DX_PLAYTYPE_BACK);
 			if (m_SoundSelect == 0)
 			{// 4ボタンが押された瞬間だけ処理
-				if (CheckSoundFile() == 0)
-				{
-					PlaySoundFile("soundBgm/亡き王女の為のセプテット.wav", DX_PLAYTYPE_LOOP);
-				}
-				else if (!CheckSoundFile == 0)
-				{
-					StopSoundFile();
-				}
+				ChangeWindowMode(TRUE);
 			}
 
 			if (m_SoundSelect == 1)
 			{// 4ボタンが押された瞬間だけ処理
-				
-				if (CheckSoundFile() == 0)
-				{
-					PlaySoundFile("soundBgm/UN.オーエンは彼女なのか.wav", DX_PLAYTYPE_LOOP);
-				}
-				else if (!CheckSoundFile == 0)
-				{
-					StopSoundFile();
-				}
-					
-			
+
+				ChangeWindowMode(FALSE);
+
 			}
 
 			m_MInterval = kTInterval;
@@ -101,15 +86,15 @@ SceneBase* SceneMusic::update()
 		if ((padState & PAD_INPUT_3) && (m_MInterval <= 0))
 		{
 			PlaySoundMem(m_EffectsHandle3, DX_PLAYTYPE_BACK);
-			StopSoundFile();
+			
 			// Titleに切り替え
 			return(new SceneTitle);
 			m_MInterval = kTInterval;
 		}
 
-		
 
-		
+
+
 
 
 	}
@@ -132,9 +117,9 @@ SceneBase* SceneMusic::update()
 	return this;
 }
 
-void SceneMusic::draw()
+void SceneConfig::draw()
 {
-	m_GHandle1 = LoadGraph("image/レミリア_通常.png");
+	/*m_GHandle1 = LoadGraph("image/レミリア_通常.png");
 	m_GHandle2 = LoadGraph("image/フラン_通常.png");
 
 	if (m_SoundSelect == 0)
@@ -144,13 +129,13 @@ void SceneMusic::draw()
 	if (m_SoundSelect == 1)
 	{
 		DrawExtendGraph(300, 0, 640, 480, m_GHandle2, TRUE);
-	}
+	}*/
 
 
-	if (CheckSoundFile() == 1)
+	/*if (CheckSoundFile() == 1)
 	{
 		DrawFormatString(0, 40, GetColor(255, 255, 255), "再生中");
-	}
+	}*/
 
 	for (int i = 0; i < kTitle; i++)
 	{

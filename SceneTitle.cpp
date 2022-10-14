@@ -5,6 +5,7 @@
 #include "SceneMusic.h"
 #include "SceneMain.h"
 #include "SceneManager.h"
+#include "SceneConfig.h"
 
 namespace
 {
@@ -26,7 +27,7 @@ MenuElement_t MenuElement[kTitle] = {
 	{ 380, 100, "ゲームスタート" , GetColor(255, 0, 0)},
 	{ 370, 170, "MusicRoom", GetColor(255, 255, 255)},
 	{ 360, 240, "ヘルプ", GetColor(255, 255, 255)},
-	{ 350, 310, "コンフィグ", GetColor(255, 255, 255)},
+	{ 350, 310, "Config", GetColor(255, 255, 255)},
 	{ 340, 380, "ゲーム終了", GetColor(255, 255, 255)},
 };
 
@@ -36,9 +37,11 @@ void SceneTitle::init()
 	m_SelectNum = 0; // 現在の選択番号
 	m_Interval = kTInterval;
 
-	m_BgmHandle1= LoadSoundMem("soundBgm/赤より紅い夢.wav", DX_PLAYTYPE_LOOP);
-	//PlaySoundFile("soundBgm/赤より紅い夢.wav",DX_PLAYTYPE_LOOP);
+	m_BgmHandle1= LoadSoundMem("soundBgm/赤より紅い夢.wav");
 	
+
+
+	PlaySoundMem(m_BgmHandle1, DX_PLAYTYPE_BACK);
 	m_isEnd = false;
 }
 
@@ -83,7 +86,8 @@ SceneBase* SceneTitle::update()
 
 			 if (m_SelectNum == 0)
 			 {// 4ボタンが押された瞬間だけ処理
-				// Mainに切り替え
+				 StopSoundMem(m_BgmHandle1);
+			  // Mainに切り替え
 				 return(new SelectChara);
 				 
 			 }
@@ -94,6 +98,15 @@ SceneBase* SceneTitle::update()
 				// Musicに切り替え
 				return(new SceneMusic);
 			 }
+
+
+			 if (m_SelectNum == 3)
+			 {// 4ボタンが押された瞬間だけ処理
+				 StopSoundMem(m_BgmHandle1);
+				 // Musicに切り替え
+				 return(new SceneConfig);
+			 }
+
 			 if (m_SelectNum == 4)
 			 {// 4ボタンが押された瞬間だけ処理
 				
