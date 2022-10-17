@@ -11,6 +11,9 @@ public:
 		m_isEnd = false;
 	}
 	virtual ~SceneTitle() {}
+	
+	// 効果音のハンドル
+	void setSoundEffectHandle1(int SoundEffectHandle1) { m_SoundEffectHandle1 = SoundEffectHandle1; }
 
 
 	virtual void init() override;
@@ -26,6 +29,8 @@ private:
 	int m_SelectNum;
 	int m_Interval;
 	int m_slide;
+	// サウンドハンドル
+	int m_SoundEffectHandle1;
 
 	int m_BgmHandle1;
 

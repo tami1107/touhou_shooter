@@ -37,7 +37,7 @@ void SceneTitle::init()
 	m_SelectNum = 0; // 現在の選択番号
 	m_Interval = kTInterval;
 
-	m_BgmHandle1= LoadSoundMem("soundBgm/赤より紅い夢.wav");
+	//m_BgmHandle1= LoadSoundMem("soundBgm/赤より紅い夢.wav");
 	
 
 
@@ -71,13 +71,15 @@ SceneBase* SceneTitle::update()
 		 if ((padState & PAD_INPUT_DOWN) && (m_Interval <= 0))
 		 {
 			 m_SelectNum = (m_SelectNum + 1) % kTitle; // 現在の選択項目を一つ下にずらす(ループする)
-			 PlaySoundMem(m_EffectsHandle1, DX_PLAYTYPE_BACK);
+			 //PlaySoundMem(m_EffectsHandle1, DX_PLAYTYPE_BACK);
+			 PlaySoundMem(m_SoundEffectHandle1, DX_PLAYTYPE_BACK);
 			 m_Interval = kTInterval;
 		 }
 		 if ((padState & PAD_INPUT_UP) && (m_Interval <= 0))
 		 {
 			 m_SelectNum = (m_SelectNum + (kTitle-1)) % kTitle; // 現在の選択項目を一つ上にずらす(逆ループする)
-			 PlaySoundMem(m_EffectsHandle1, DX_PLAYTYPE_BACK);
+			// PlaySoundMem(m_EffectsHandle1, DX_PLAYTYPE_BACK);
+			PlaySoundMem(m_SoundEffectHandle1, DX_PLAYTYPE_BACK);
 			 m_Interval = kTInterval;
 		 }
 		 if ((padState & PAD_INPUT_4) && (m_Interval <= 0))

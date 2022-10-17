@@ -1,5 +1,5 @@
 #pragma once
-
+#include "DxLib.h"
 #include "Vec2.h"
 
 class SceneMain;
@@ -8,7 +8,7 @@ class Player
 {
 public:
 	// 定数定義
-
+	
 	// プレイヤーグラフィック分割数
 	static constexpr int kPlayerGraphicDivX = 4;
 	static constexpr int kPlayerGraphicDivY = 3;
@@ -18,12 +18,26 @@ public:
 	static constexpr int kPlayerGraphicSizeX = 50;
 	static constexpr int kPlayerGraphicSizeY = 50;
 
+	// 中心点("低速時の中心点.png")のグラフィックサイズ
+	static constexpr int kPointHandleSizeX = 16;
+	static constexpr int kPointHandleSizeY = 16;
+
+	// 円("低速時のエフェクト.png")のグラフィックサイズ
+	static constexpr int kCircleHandleSizeX = 64;
+	static constexpr int kCircleHandleSizeY = 64;
+
 public:
 	Player();
 	virtual ~Player();
 
 	// グラフィックデータ設定
 	void setHandle(int index, int handle) { m_handle[index] = handle; }
+
+	void setPointHandle(int PointHandle) { m_pointHandle = PointHandle; }
+
+	void setCircleHandle(int CircleHandle) { m_circleHandle = CircleHandle; }
+
+	void setPlayerSoundEffectHandle(int PlayerSoundEffectHandle){ m_PlayerSoundEffectHandle = PlayerSoundEffectHandle;}
 
 	// プレイヤーの初期化
 	void init();
@@ -42,6 +56,14 @@ public:
 private:
 	int m_handle[kPlayerGraphicDivNum];
 
+	int m_pointHandle;
+	int m_pointHandleSizeX, m_pointHandleSizeY;
+	
+	int m_circleHandle;
+	int m_circleHandleSizeX, m_circleHandleSizeY;
+
+	int m_PlayerSoundEffectHandle;
+	
 	//SceneMainのポインタ
 	SceneMain* m_pMain;
 
@@ -49,14 +71,13 @@ private:
 	Vec2 m_pos;
 	// 移動
 	Vec2 m_vec;
-
+	// ショットの間隔
 	int m_shotInterval;
 
-	int m_point;
-	int m_pointSizeX, m_pointSizeY;
+	
 
-	int m_circle;
-	int m_circleSizeX, m_circleSizeY;
+
+
 	double m_revolution;
 
 	int m_push;

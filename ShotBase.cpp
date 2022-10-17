@@ -38,4 +38,6 @@ void ShotBase::draw()
 {
 	if (!m_isExist)return;
 	DrawGraphF(m_pos.x, m_pos.y, m_handle, true);
+
+	
 }

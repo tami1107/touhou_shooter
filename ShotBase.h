@@ -21,12 +21,14 @@ public:
 
 	//存在るするか
 	bool isExist() const { return m_isExist; }
+	// 情報の取得
+	Vec2 getPos() const { return m_pos; }
 
 	//継承先からも使えるようになる
 protected:
 	// グラフィックハンドル
 	int m_handle;
-
+	
 	//int m_shotNumber;
 	// 表示位置
 	Vec2	m_pos;

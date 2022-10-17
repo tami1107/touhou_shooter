@@ -22,7 +22,6 @@ namespace
 	constexpr int kRevolutionSpeed = 10;
 	// 画面端まで行動可能
 	constexpr int kSceneEnd = 7;
-
 }
 
 Player::Player()
@@ -31,13 +30,10 @@ Player::Player()
 	{
 		handle = -1;
 	}
-	m_pointHandle = -1;
-	m_circleHandle = -1;
-
 	m_pMain = nullptr;
 	m_shotInterval = 0;
-	
-	
+	m_point = 0;
+	m_circle = 0;
 	m_push = 0;
 
 	m_revolution = 0.0;
@@ -64,6 +60,13 @@ void Player::init()
 
 	m_push = 0;
 	m_revolution = 0.0;
+	m_point = LoadGraph("image/低速時の中心点.png");
+	m_circle = LoadGraph("image/低速時のエフェクト.png");
+
+	// 読みこんだグラフィックのサイズを得る
+	GetGraphSize(m_point, &m_pointSizeX, &m_pointSizeY);
+	GetGraphSize(m_circle, &m_circleSizeX, &m_circleSizeY);
+
 
 	m_dirNo = 0;
 }
@@ -85,8 +88,6 @@ void Player::update()
 		{
 			if (m_pMain->createShotPlayerNormal(getPos()))
 			{
-				// 弾を打った時に効果音を出す
-				PlaySoundMem(m_PlayerSoundEffectHandle, DX_PLAYTYPE_BACK);
 				m_shotInterval = kShotInterval;
 			}
 		}
@@ -168,16 +169,10 @@ void Player::draw()
 	DrawGraph(static_cast<int>(m_pos.x), static_cast<int>(m_pos.y), m_handle[m_animeNo], true);
 	if (m_push == 1)
 	{
-		// playerの中心点
-		DrawGraph(m_pos.x + (kPlayerGraphicSizeX / 2) - (kPointHandleSizeX / 2), m_pos.y + (kPlayerGraphicSizeY / 2) - (kPointHandleSizeY / 2), m_pointHandle, TRUE);
-
+		DrawGraph(m_pos.x + (kPlayerGraphicSizeX / 2) - (m_pointSizeY/2), m_pos.y + (kPlayerGraphicSizeY / 2) - (m_pointSizeY / 2), m_point, TRUE);
 		// 読みこんだグラフィックを回転描画
-		DrawRotaGraph2(m_pos.x + (kPlayerGraphicSizeX / 2), m_pos.y + (kPlayerGraphicSizeY / 2), (kCircleHandleSizeX / 2), (kCircleHandleSizeY / 2), 0.8, m_revolution / kRevolutionSpeed / PI, m_circleHandle, TRUE);
-	
+		DrawRotaGraph2(m_pos.x + (kPlayerGraphicSizeX / 2), m_pos.y + (kPlayerGraphicSizeY / 2), (m_circleSizeX / 2), (m_circleSizeY / 2), 0.8, m_revolution / kRevolutionSpeed / PI, m_circle, TRUE);
 	}
-
-	
-
 }
 
 

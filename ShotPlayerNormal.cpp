@@ -1,9 +1,11 @@
 #include "ShotPlayerNormal.h"
 #include "game.h"
 
+#include "DxLib.h"
 namespace
 {
-	constexpr float kShotSpeed = -8.0f;
+	constexpr float kShotSpeed = -18.0f;
+	constexpr int kLeftShotP = 10;
 }
 
 void ShotPlayerNormal::start(Vec2 pos)
@@ -23,4 +25,10 @@ void ShotPlayerNormal::update()
 	{
 		m_isExist = false;
 	}
+}
+
+void ShotPlayerNormal::draw()
+{
+	DrawGraphF(m_pos.x , m_pos.y, m_handle, true);
+	
 }

@@ -8,8 +8,8 @@ class Enemy
 {
 public:
 	// 敵グラフィックサイズ
-	static constexpr int kEnemyGraphicSizeX = 64;
-	static constexpr int kEnemyGraphicSizeY = 80;
+	static constexpr int kEnemyGraphicSizeX = 61;
+	static constexpr int kEnemyGraphicSizeY = 100;
 public:
 	Enemy();
 	virtual ~Enemy();
