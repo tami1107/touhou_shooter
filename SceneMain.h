@@ -75,11 +75,6 @@ private:
 	int m_EffectsHandle3;
 
 	//当たり判定用　プレイヤーと円
-	float m_GetHitX;
-	float m_GetHitY;
-	float m_GetHit;
-	float m_CenterSize;
-	float m_CenterMatch;
 	float m_PlayerPosX;
 	float m_PlayerPosY;
 

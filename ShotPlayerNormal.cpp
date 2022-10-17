@@ -5,12 +5,12 @@
 namespace
 {
 	constexpr float kShotSpeed = -18.0f;
-	constexpr int kLeftShotP = 10;
 }
 
 void ShotPlayerNormal::start(Vec2 pos)
 {
 	ShotBase::start(pos);
+	
 
 	m_vec.x = 0;
 	m_vec.y = kShotSpeed;

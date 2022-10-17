@@ -33,6 +33,10 @@ namespace
 	// 敵グラフィックサイズ
 	static constexpr int kEnemyGraphicSizeX = Enemy::kEnemyGraphicSizeX;
 	static constexpr int kEnemyGraphicSizeY = Enemy::kEnemyGraphicSizeY;
+
+	// 弾グラフィックサイズ
+	static constexpr int kShotGraphicSizeX = 16;
+	static constexpr int kShotGraphicSizeY = 36;
 }
 
 SceneMain::SceneMain()
@@ -150,6 +154,8 @@ SceneBase* SceneMain::update()
 		}
 		it++;
 	}
+
+
 
 	if (padState & PAD_INPUT_3)
 	{
@@ -291,24 +297,26 @@ bool SceneMain::CheckHit()
 
 bool SceneMain::CheckPlayerHit()
 {
-	m_player.getPos();
-	
-
 	std::vector<ShotBase*>::iterator it = m_pShotVt.begin();
 	while (it != m_pShotVt.end())
 	{
 		auto& pShot = (*it);
 		pShot->getPos();
-
+		//エネミーの中心座標を取得
 		m_enemyPosX = m_enemy.getPos().x + (kPlayerGraphicSizeX / 2);
 		m_enemyPosY = m_enemy.getPos().y + (kPlayerGraphicSizeY / 2);
+		//プレイヤーのショットの中心座標を取得
+		m_myShotPosX = pShot->getPos().x;
+
 		//当たり判定
-		float dx2 = pShot->getPos().x - m_enemyPosX;
-		float dy2 = pShot->getPos().y - m_enemyPosY;
+		float dx2 = m_enemyPosX - pShot->getPos().x;
+		float dy2 = m_enemyPosY - pShot->getPos().y;
 		float dr2 = dx2 * dx2 + dy2 * dy2;
 
-		float ar2 = kPlayerShotSize + kPlayerHitBoxSize;
+		float ar2 = kPlayerShotSize + kEnemyHitBoxSize;
 		float dl2 = ar2 * ar2;
+
+		DrawCircle(pShot->getPos().x, pShot->getPos().y, kPlayerShotSize, GetColor(255, 0, 0), FALSE);
 		if (dr2 < dl2)
 		{
 			return true;

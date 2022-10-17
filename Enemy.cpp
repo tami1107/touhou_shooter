@@ -55,10 +55,10 @@ void Enemy::update()
 	{
 		if (randShot > 50)
 		{
-			if (m_pMain->createShotNormal(getPos()))
-			{
-				m_shotInterval = kShotInterval;
-			}
+			//if (m_pMain->createShotNormal(getPos()))
+			//{
+				//m_shotInterval = kShotInterval;
+			//}
 		}
 	/*	else if (randShot > 20)
 		{

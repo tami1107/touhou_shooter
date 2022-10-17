@@ -29,6 +29,8 @@ protected:
 	// グラフィックハンドル
 	int m_handle;
 	
+	// shotの位置
+	int m_shotPosX;
 	//int m_shotNumber;
 	// 表示位置
 	Vec2	m_pos;
