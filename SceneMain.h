@@ -42,6 +42,7 @@ public:
 	virtual bool CheckHit();
 	virtual bool CheckPlayerShotHit();
 	virtual bool CheckEnemyShotHit();
+	virtual bool CheckGraze();
 	//virtual bool CheckMyShotHit();
 	//virtual bool createShotFall(Vec2 pos);
 	//virtual bool createShotBound(Vec2 pos);
@@ -57,6 +58,13 @@ private:
 	int m_hPointGraphic;
 	int m_hCircleGraphic;
 	
+	// プレイヤーの攻撃力
+	int m_hEnemyHP;
+	// エネミーがヒットしたら画像を消す
+	int m_hEnemyHit;
+
+	// グレイズの回数
+	int m_GrazePoint;
 
 	// プレイヤーのショットハンドル
 	int m_hPlayerShot1;
@@ -89,6 +97,7 @@ private:
 	float m_PlayerPosX;
 	float m_PlayerPosY;
 
+public:
 	// プレイヤー
 	Player m_player;
 	// 敵

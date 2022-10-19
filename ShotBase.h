@@ -31,7 +31,7 @@ protected:
 	
 	// shot‚ÌˆÊ’u
 	int m_shotPosX;
-	//int m_shotNumber;
+	
 	// •\Ž¦ˆÊ’u
 	Vec2	m_pos;
 	// ˆÚ“®

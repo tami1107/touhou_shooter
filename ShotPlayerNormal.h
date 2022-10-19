@@ -2,6 +2,8 @@
 
 #include "ShotBase.h"
 
+class SceneMain;
+
 class ShotPlayerNormal : public ShotBase
 {
 public:
@@ -19,6 +21,9 @@ public:
 	}
 
 	void setHandle(int handle) { m_handle = handle; }
+	void setEnemyHit(int EnemyHIt) { m_EnemyHIt = EnemyHIt; }
+
+	
 
 	//ショット開始
 	virtual void start(Vec2 pos);
@@ -29,5 +34,5 @@ public:
 	// 情報の取得
 	Vec2 getPos() const { return m_pos; }
 
-	
+	int m_EnemyHIt;
 };

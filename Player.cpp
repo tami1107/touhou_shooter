@@ -5,8 +5,7 @@
 
 #include "SceneMain.h"
 
-// ‰~Žü—¦‚Ì’è‹`
-#define PI    3.1415926535897932384626433832795f
+
 
 namespace
 {
@@ -172,7 +171,7 @@ void Player::draw()
 		DrawGraph(m_pos.x + (kPlayerGraphicSizeX / 2) - (kPointHandleSizeX / 2), m_pos.y + (kPlayerGraphicSizeY / 2) - (kPointHandleSizeY / 2), m_pointHandle, TRUE);
 
 		// “Ç‚Ý‚±‚ñ‚¾ƒOƒ‰ƒtƒBƒbƒN‚ð‰ñ“]•`‰æ
-		DrawRotaGraph2(m_pos.x + (kPlayerGraphicSizeX / 2), m_pos.y + (kPlayerGraphicSizeY / 2), (kCircleHandleSizeX / 2), (kCircleHandleSizeY / 2), 0.8, m_revolution / kRevolutionSpeed / PI, m_circleHandle, TRUE);
+		DrawRotaGraph2(m_pos.x + (kPlayerGraphicSizeX / 2), m_pos.y + (kPlayerGraphicSizeY / 2), (kCircleHandleSizeX / 2), (kCircleHandleSizeY / 2), 0.8, m_revolution / kRevolutionSpeed / DX_PI, m_circleHandle, TRUE);
 	
 	}
 

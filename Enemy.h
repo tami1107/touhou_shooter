@@ -7,8 +7,6 @@ class SceneMain;
 class Enemy
 {
 public:
-
-
 	// 敵グラフィック分割数
 	static constexpr int kEnemyGraphicDivX = 6;
 	static constexpr int kEnemyGraphicDivY = 1;
@@ -24,9 +22,8 @@ public:
 	virtual ~Enemy();
 
 	// グラフィックデータ設定
-		// グラフィックデータ設定
 	void setHandle(int index, int handle) { m_handle[index] = handle; }
-	//void setHandle(int handle) { m_handle = handle; }
+	void setEnemyHP(int EnemyHP) { m_EnemyHP = EnemyHP; }
 
 	// プレイヤーの初期化
 	void init();
@@ -45,6 +42,8 @@ public:
 private:
 	int m_handle[kEnemyGraphicDivNum];
 
+	int m_EnemyHP;
+
 	//SceneMainのポインタ
 	SceneMain* m_pMain;
 
@@ -53,8 +52,9 @@ private:
 	// 移動
 	Vec2 m_vec;
 
+	// ショットのインターバル
 	int m_shotInterval;
-	int m_waitFrame;
+	
 	// キャラクターのアニメーション
 	int m_animeNo;	// 表示する番号
 	int m_animeFrame;

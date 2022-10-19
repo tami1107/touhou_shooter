@@ -1,34 +1,16 @@
 #include "ShotEnemyNormal.h"
 #include "game.h"
-
+#include "Enemy.h"
 #include "DxLib.h"
-
-#define BOSS_SHOT_MAX 10
-
-struct BOSS_SHOT {
-	double first_x;
-	double first_y;
-	double x[300];
-	double y[300];
-	double draw_x[300];
-	double draw_y[300];
-	double angle[300];
-	double angle2[300];
-	double var[300];
-	int init_flag;
-	int move_flag;
-	int move_type;
-	int max_bullet;
-	int gamecount_point[5];
-	double range;
-	int boss_num;
-};
-
-struct BOSS_SHOT boss_shot[BOSS_SHOT_MAX];
 
 namespace
 {
+	// エネミーの弾速
 	constexpr float kShotSpeed = 10.0f;
+
+	// 敵グラフィックサイズ
+	static constexpr int kEnemyGraphicSizeX = Enemy::kEnemyGraphicSizeX;
+	static constexpr int kEnemyGraphicSizeY = Enemy::kEnemyGraphicSizeY;
 }
 
 
@@ -38,7 +20,10 @@ void ShotEnemyNormal::start(Vec2 pos)
 {
 	ShotBase::start(pos);
 
-	
+	// ショットを画像の中心位置にもっていく
+	m_pos.x = pos.x + (kEnemyGraphicSizeX / 2) - (kEnemyShot1GraphicSizeX / 2);
+	m_pos.y = pos.y + (kEnemyGraphicSizeY / 2) - (kEnemyShot1GraphicSizeY / 2);
+
 
 	m_vec.x = 0;
 	m_vec.y = kShotSpeed;

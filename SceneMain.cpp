@@ -15,9 +15,6 @@ namespace
 	//ショットの発射間隔
 	constexpr int kShotInterval = 16;
 	// グラフィックファイル名
-	//const char* const kPlayerGraphicFilename = "image/player.png";
-	//const char* const kEnemyGraphicFilename = "image/フランドール.png";
-
 	const char* const kEnemyGraphicFilename = "image/フランアニメーション.png";
 	const char* const kPlayerGraphicFilename = "image/魔理沙.png";
 	const char* const kPlayerPoint = "image/低速時の中心点.png";
@@ -28,6 +25,7 @@ namespace
 	static constexpr int kEnemyHitBoxSize = 40;
 	static constexpr int kPlayerShot1Size = 5;
 	static constexpr int kEnemyShot1Size = 5;
+	static constexpr int kGrazeSize = 20;
 	
 	
 	// プレイヤーグラフィックサイズ
@@ -44,6 +42,9 @@ namespace
 	// 弾(エネミー)グラフィックサイズ
 	static constexpr int kEnemyShot1GraphicSizeX = ShotEnemyNormal::kEnemyShot1GraphicSizeX;
 	static constexpr int kEnemyShot1GraphicSizeY = ShotEnemyNormal::kEnemyShot1GraphicSizeY;
+	
+	// エネミーのHP
+	//static constexpr int kPlayerPower = -1;
 
 }
 
@@ -68,6 +69,7 @@ SceneMain::SceneMain()
 	m_EffectsHandle1 = -1;
 
 	m_hPlayerShotNumber = 0;
+	m_hEnemyHP = 0;
 }
 SceneMain::~SceneMain()
 {
@@ -124,6 +126,11 @@ void SceneMain::init()
 	m_enemy.setMain(this);
 
 	m_SceneBase.setSoundEffectHandle1(m_hSoundEffectHandle1);
+
+	// プレイヤーの攻撃力
+	m_hEnemyHP = 100;
+	// グレイズした回数
+	m_GrazePoint = 0;
 }
 
 // 終了処理
@@ -140,7 +147,6 @@ void SceneMain::end()
 		DeleteGraph(handle);
 	}
 	
-	//DeleteGraph(m_hEnemyGraphic);
 	DeleteGraph(m_hShotGraphic);
 
 	DeleteGraph(m_hPointGraphic);
@@ -260,11 +266,11 @@ SceneBase* SceneMain::update()
 		return(new SceneTitle);
 	}
 	
-	// プレイヤーの弾がエネミーに当たった場合、Titleに戻る
+	// プレイヤーの弾がエネミーに当たった場合、HPを減らす
 	if (CheckPlayerShotHit() == true)
 	{
-		// Titleに切り替え
-		return(new SceneTitle);
+		m_hEnemyHP--;
+		//m_ShotPlayerNormal.setEnemyHit(m_pShotEnemy1Vt);
 	}
 
 	// エネミーの弾がプレイヤーに当たった場合、Titleに戻る
@@ -274,23 +280,15 @@ SceneBase* SceneMain::update()
 		return(new SceneTitle);
 	}
 
+	if (CheckGraze() == true)
+	{
+		m_GrazePoint++;
+	}
+
+	m_enemy.setEnemyHP(m_hEnemyHP);
 
 	return this;
-#if false
-	for (auto& pShot : m_pShotVt)
-	{
-		if (!pShot) continue;		//nullの場合処理しない
-		pShot->update();
-		if (!pShot->isExist())
-		{
-			delete pShot;
-			pShot = nullptr;
 
-			//vectorの要素削除
-
-		}
-	}
-#endif
 }
 
 // 毎フレームの描画
@@ -333,19 +331,13 @@ void SceneMain::draw()
 	DrawCircle(m_playerPosX, m_playerPosY, kPlayerHitBoxSize,GetColor(255, 255, 255), FALSE);
 	DrawCircle(m_enemyPosX, m_enemyPosY, kEnemyHitBoxSize, GetColor(255, 255, 255), FALSE);
 
-	//現在存在している弾の数を表示
-	DrawFormatString(0, 0, GetColor(255, 255, 255), "弾の数:%d", m_pShotVt.size());
+	//現在存在敵のHPを表示
+	//DrawFormatString(0, 0, GetColor(255, 255, 255), "HP:%d", m_hPlayerPower);
+	//現在のグレイズ数を表示
+	DrawFormatString(700, 0, GetColor(255, 255, 255), "Graze:%d", m_GrazePoint);
 }
 
-//bool SceneMain::createShotPlayer(Vec2 pos)
-//{
-//	ShotPlayer* pShot = new ShotPlayer;
-//	pShot->setHandle(m_hShotGraphic);
-//	pShot->start(pos);
-//	m_pShotVt.push_back(pShot);
-//
-//	return true;
-//}
+
 
 bool SceneMain::createShotNormal(Vec2 pos)
 {
@@ -379,23 +371,6 @@ bool SceneMain::createShotEnemyNormal(Vec2 pos)
 	return true;
 }
 
-//bool SceneMain::CheckHit()
-//{
-//	
-//
-//	float dx = t_circleA.x - t_circleB.x;
-//	float dy = t_circleA.y - t_circleB.y;
-//	float dr = dx * dx + dy * dy;
-//
-//	float ar = t_circleA.r + t_circleB.r;
-//	float dl = ar * ar;
-//	if (dr < dl)
-//	{
-//		return true;
-//	}
-//
-//	return false;
-//}
 
 bool SceneMain::CheckHit()
 {
@@ -440,6 +415,7 @@ bool SceneMain::CheckPlayerShotHit()
 		DrawFormatString(0, 10, GetColor(255, 255, 255), "自機弾の数:%d", m_pShotPlayer1Vt.size());
 		if (dr < dl)
 		{
+			
 			return true;
 		}
 		else
@@ -488,6 +464,46 @@ bool SceneMain::CheckEnemyShotHit()
 		return false;
 	}
 }
+
+bool SceneMain::CheckGraze()
+{
+	std::vector<ShotEnemyNormal*>::iterator itShotEnemy1 = m_pShotEnemy1Vt.begin();
+	while (itShotEnemy1 != m_pShotEnemy1Vt.end())
+	{
+		auto& pShot = (*itShotEnemy1);
+		pShot->getPos();
+		//エネミーのショットの中心座標を取得
+		m_enemyShotPosX = pShot->getPos().x + (kEnemyShot1GraphicSizeX / 2);
+		m_enemyShotPosY = pShot->getPos().y + (kEnemyShot1GraphicSizeY / 2);
+
+		//当たり判定
+		float dx2 = m_playerPosX - m_enemyShotPosX;
+		float dy2 = m_playerPosY - m_enemyShotPosY;
+		float dr2 = dx2 * dx2 + dy2 * dy2;
+
+		float ar2 = kEnemyShot1Size + kGrazeSize;
+		float dl2 = ar2 * ar2;
+		//グレイズの判定表示
+		DrawCircle(m_playerPosX, m_playerPosY, kGrazeSize, GetColor(0, 255, 0), FALSE);
+		
+		if (dr2 < dl2)
+		{
+			return true;
+		}
+		else
+		{
+			itShotEnemy1++;
+
+			continue;
+		}
+		return false;
+	}
+}
+
+
+
+
+
 //bool SceneMain::createShotFall(Vec2 pos)
 //{
 //	ShotFall* pShot = new ShotFall;
