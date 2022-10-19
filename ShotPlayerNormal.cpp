@@ -27,6 +27,7 @@ void ShotPlayerNormal::update()
 	
 	
 	
+	
 
 	if (m_pos.y < 0)
 	{

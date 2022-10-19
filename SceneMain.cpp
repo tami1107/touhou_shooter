@@ -176,8 +176,6 @@ void SceneMain::end()
 	}
 
 
-
-
 	for (auto& pShotEnemy2 : m_pShotEnemy2Vt)
 	{
 		assert(pShotEnemy2);
@@ -270,7 +268,6 @@ SceneBase* SceneMain::update()
 	if (CheckPlayerShotHit() == true)
 	{
 		m_hEnemyHP--;
-		//m_ShotPlayerNormal.setEnemyHit(m_pShotEnemy1Vt);
 	}
 
 	// エネミーの弾がプレイヤーに当たった場合、Titleに戻る
@@ -331,8 +328,6 @@ void SceneMain::draw()
 	DrawCircle(m_playerPosX, m_playerPosY, kPlayerHitBoxSize,GetColor(255, 255, 255), FALSE);
 	DrawCircle(m_enemyPosX, m_enemyPosY, kEnemyHitBoxSize, GetColor(255, 255, 255), FALSE);
 
-	//現在存在敵のHPを表示
-	//DrawFormatString(0, 0, GetColor(255, 255, 255), "HP:%d", m_hPlayerPower);
 	//現在のグレイズ数を表示
 	DrawFormatString(700, 0, GetColor(255, 255, 255), "Graze:%d", m_GrazePoint);
 }
@@ -415,7 +410,8 @@ bool SceneMain::CheckPlayerShotHit()
 		DrawFormatString(0, 10, GetColor(255, 255, 255), "自機弾の数:%d", m_pShotPlayer1Vt.size());
 		if (dr < dl)
 		{
-			
+			//vectorの要素削除
+			itShotPlayer1 = m_pShotPlayer1Vt.erase(itShotPlayer1);
 			return true;
 		}
 		else

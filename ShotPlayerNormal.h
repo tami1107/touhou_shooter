@@ -21,7 +21,7 @@ public:
 	}
 
 	void setHandle(int handle) { m_handle = handle; }
-	void setEnemyHit(int EnemyHIt) { m_EnemyHIt = EnemyHIt; }
+	void setEnemyHit(int EnemyHit) { m_EnemyHit = EnemyHit; }
 
 	
 
@@ -34,5 +34,5 @@ public:
 	// î•ñ‚Ìæ“¾
 	Vec2 getPos() const { return m_pos; }
 
-	int m_EnemyHIt;
+	int m_EnemyHit;
 };
