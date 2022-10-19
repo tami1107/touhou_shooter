@@ -8,7 +8,7 @@
 namespace
 {
 	// キャラクターアニメーションの速度
-	int kAnimeChangeFrame = 8;
+	int kAnimeChangeFrame = 6;
 	// X方向、Y方向の速度
 	constexpr float kSpeed = 4;
 	//ショットの発射間隔
@@ -19,7 +19,11 @@ namespace
 
 Enemy::Enemy()
 {
-	m_handle = 1;
+	for (auto& handle : m_handle)
+	{
+		 handle = -1;
+	}
+	//m_handle = 1;
 	m_pMain = nullptr;
 	m_shotInterval = 0;
 }
@@ -55,10 +59,14 @@ void Enemy::update()
 	{
 		if (randShot > 50)
 		{
-			//if (m_pMain->createShotNormal(getPos()))
-			//{
-				//m_shotInterval = kShotInterval;
-			//}
+			/*if (m_pMain->createShotNormal(getPos()))
+			{
+				m_shotInterval = kShotInterval;
+			}*/
+			if (m_pMain->createShotEnemyNormal(getPos()))
+			{
+				m_shotInterval = kShotInterval;
+			}
 		}
 	/*	else if (randShot > 20)
 		{
@@ -76,38 +84,43 @@ void Enemy::update()
 		}*/
 	}
 
-	if (m_waitFrame > 0)
-	{
-		m_waitFrame--;
-		return;
-	}
+	//if (m_waitFrame > 0)
+	//{
+	//	m_waitFrame--;
+	//	return;
+	//}
 
 
 	if (m_pos.x < 0)
 	{
 		m_vec.x *= -1;
-		m_waitFrame = kMoveTime;
+		
 	}
 	if (m_pos.x > Game::kScreenWidth - kEnemyGraphicSizeX)
 	{
 		m_vec.x *= -1;
-		m_waitFrame = kMoveTime;
+		
 	}
 
-	if (randMove > 50)
-	{
-
-	}
-
-	else if (randMove > 20)
-	{
-
-	}
+	
 
 	m_pos.x += m_vec.x;
+
+	m_animeFrame++;
+	if (m_animeFrame >= kEnemyGraphicDivX * kAnimeChangeFrame)
+	{
+		m_animeFrame = 0;
+	}
+
+	int tempAnimeNo = m_animeFrame / kAnimeChangeFrame;
+	m_animeNo = m_dirNo + tempAnimeNo;
+
+	m_dirNo = 0;
 }
 
 void Enemy::draw()
 {
-	DrawGraph(m_pos.x, m_pos.y, m_handle, true);
+	DrawGraph(static_cast<int>(m_pos.x), static_cast<int>(m_pos.y), m_handle[m_animeNo], true);
+
+	//DrawGraph(m_pos.x, m_pos.y, m_handle, true);
 }

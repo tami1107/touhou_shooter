@@ -1,5 +1,7 @@
 #include "ShotNormal.h"
 #include "game.h"
+#include "DxLib.h"
+
 
 namespace
 {
@@ -23,4 +25,13 @@ void ShotNormal::update()
 	{
 		m_isExist = false;
 	}
+}
+
+// •\Ž¦
+void ShotNormal::draw()
+{
+	
+	DrawGraphF(m_pos.x, m_pos.y, m_handle, true);
+
+
 }

@@ -6,7 +6,7 @@ class SceneBase
 public:
 	SceneBase() 
 	{
-		int m_SoundEffectHandle1 = 0;
+		//int m_SoundEffectHandle1 = 0;
 
 		int m_EffectsHandle1 = 0;// 選択音のハンドル
 		int m_EffectsHandle2 = 0;// 決定音のハンドル
@@ -16,7 +16,9 @@ public:
 	}
 	virtual ~SceneBase() {}
 
-	
+	// 効果音のハンドル
+	void setSoundEffectHandle1(int SoundEffectHandle1) { m_SoundEffectHandle1 = SoundEffectHandle1; }
+
 
 	virtual void init() {}
 	virtual void end() {}
@@ -28,6 +30,8 @@ public:
 	virtual bool isEnd() { return false; }
 
 	
+	// サウンドハンドル
+	int m_SoundEffectHandle1;
 
 	int m_EffectsHandle1;// 選択音のハンドル
 	int m_EffectsHandle2;// 決定音のハンドル

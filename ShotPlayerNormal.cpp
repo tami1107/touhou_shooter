@@ -18,8 +18,15 @@ void ShotPlayerNormal::start(Vec2 pos)
 
 void ShotPlayerNormal::update()
 {
+	int PlayerNormal[2];
+
 	if (!m_isExist)return;
 	m_pos += m_vec;
+
+	
+	
+	
+	
 
 	if (m_pos.y < 0)
 	{

@@ -2,19 +2,17 @@
 
 #include "ShotBase.h"
 
-class ShotPlayerNormal : public ShotBase
+class ShotEnemyNormal : public ShotBase
 {
 public:
-
-	// 弾グラフィックサイズ
-	static constexpr int kPlayerShot1GraphicSizeX = 16;
-	static constexpr int kPlayerShot1GraphicSizeY = 36;
-
+	// 弾(エネミー)グラフィックサイズ
+	static constexpr int kEnemyShot1GraphicSizeX = 8;
+	static constexpr int kEnemyShot1GraphicSizeY = 14;
 public:
-	ShotPlayerNormal()
+	ShotEnemyNormal()
 	{
 	}
-	virtual ~ShotPlayerNormal()
+	virtual ~ShotEnemyNormal()
 	{
 	}
 
@@ -29,5 +27,6 @@ public:
 	// 情報の取得
 	Vec2 getPos() const { return m_pos; }
 
-	
+
 };
+

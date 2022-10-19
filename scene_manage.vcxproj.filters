@@ -69,6 +69,9 @@
     <ClCompile Include="SceneConfig.cpp">
       <Filter>ソース ファイル\Scene.cpp</Filter>
     </ClCompile>
+    <ClCompile Include="ShotEnemyNormal.cpp">
+      <Filter>ソース ファイル\Shot.cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
@@ -112,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="SceneConfig.h">
       <Filter>ヘッダー ファイル\Scene.h</Filter>
+    </ClInclude>
+    <ClInclude Include="ShotEnemyNormal.h">
+      <Filter>ヘッダー ファイル\Shot.h</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -7,6 +7,8 @@
 #include "enemy.h"
 #include "SceneTitle.h"
 #include "ShotPlayerNormal.h"
+#include "ShotEnemyNormal.h"
+#include "ShotNormal.h"
 
 class SceneMain : public SceneBase
 {
@@ -34,9 +36,12 @@ public:
 
 	virtual bool createShotPlayerNormal(Vec2 pos);
 
+	virtual bool createShotEnemyNormal(Vec2 pos);
+
 	//当たり判定
 	virtual bool CheckHit();
-	virtual bool CheckPlayerHit();
+	virtual bool CheckPlayerShotHit();
+	virtual bool CheckEnemyShotHit();
 	//virtual bool CheckMyShotHit();
 	//virtual bool createShotFall(Vec2 pos);
 	//virtual bool createShotBound(Vec2 pos);
@@ -47,7 +52,7 @@ private:
 
 	// プレイヤーのグラフィックハンドル
 	int m_hPlayerGraphic[Player::kPlayerGraphicDivNum];
-	int m_hEnemyGraphic;
+	int m_hEnemyGraphic[Enemy::kEnemyGraphicDivNum];
 	int m_hShotGraphic;
 	int m_hPointGraphic;
 	int m_hCircleGraphic;
@@ -57,15 +62,21 @@ private:
 	int m_hPlayerShot1;
 	int m_hPlayerShotNumber;
 	int m_hPlayerSoundEffectHandle;
+	// エネミーのショットハンドル
+	int m_hEnemyShot1;
+	int m_hEnemyShotNumber;
 
 	// 位置情報 
+	//(プレイヤーとエネミーの位置)
 	int m_playerPosX;
 	int m_playerPosY;
 	int m_enemyPosX;
 	int m_enemyPosY;
+	//(プレイヤーとエネミーのショットの位置)
 	int m_myShotPosX;
 	int m_myShotPosY;
-
+	int m_enemyShotPosX;
+	int m_enemyShotPosY;
 
 	// サウンドハンドル
 	int m_hTestSound;
@@ -85,11 +96,19 @@ private:
 	// プレイヤーショット
 	ShotPlayerNormal m_ShotPlayerNormal;
 
+	SceneBase m_SceneBase;
 
 	SceneTitle m_SceneTitle;
 	// ショット
 	//ShotBase* m_pShot[kShotMax];
 	std::vector<ShotBase*> m_pShotVt;
+
+	std::vector<ShotPlayerNormal*> m_pShotPlayer1Vt;
+
+	std::vector<ShotEnemyNormal*> m_pShotEnemy1Vt;
+
+	std::vector<ShotNormal*> m_pShotEnemy2Vt;
+
 	/*ShotBound* m_pShotBound[kShotMax];
 	ShotNormal* m_pShotNormal[kShotMax];
 	ShotFall* m_pShotFall[kShotMax];*/

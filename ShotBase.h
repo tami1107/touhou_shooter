@@ -8,7 +8,7 @@ public:
 	ShotBase();
 	virtual ~ShotBase();
 
-	void setHandle(int handle) { m_handle = handle; }
+	//void setHandle(int handle) { m_handle = handle; }
 	
 
 

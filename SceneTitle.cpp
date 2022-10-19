@@ -41,7 +41,7 @@ void SceneTitle::init()
 	
 
 
-	PlaySoundMem(m_BgmHandle1, DX_PLAYTYPE_BACK);
+	//PlaySoundMem(m_BgmHandle1, DX_PLAYTYPE_BACK);
 	m_isEnd = false;
 }
 
@@ -50,14 +50,9 @@ SceneBase* SceneTitle::update()
 {
 	
 
-	m_EffectsHandle1 = LoadSoundMem("soundEffect/選択音.wav");
+	//m_EffectsHandle1 = LoadSoundMem("soundEffect/選択音.wav");
 	m_EffectsHandle2 = LoadSoundMem("soundEffect/決定音.wav");
 	m_EffectsHandle3 = LoadSoundMem("soundEffect/キャンセル音.wav");
-
-	
-
-	
-	
 
 	int padState = GetJoypadInputState( DX_INPUT_KEY_PAD1 ) ;
 
@@ -158,7 +153,11 @@ void SceneTitle::draw()
 	{
 		DrawFormatString(0, 40, GetColor(255, 255, 255), "再生中");
 	}
-
+	// デバッグ用
+	if (CheckSoundMem(m_SoundEffectHandle1) == 1)
+	{
+		DrawFormatString(0, 40, GetColor(255, 255, 255), "再生中");
+	}
 
 	for (int i = 0; i < 5; i++) 
 	{   

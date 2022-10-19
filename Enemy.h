@@ -7,15 +7,26 @@ class SceneMain;
 class Enemy
 {
 public:
+
+
+	// 敵グラフィック分割数
+	static constexpr int kEnemyGraphicDivX = 6;
+	static constexpr int kEnemyGraphicDivY = 1;
+	static constexpr int kEnemyGraphicDivNum = kEnemyGraphicDivX * kEnemyGraphicDivY;
+
 	// 敵グラフィックサイズ
-	static constexpr int kEnemyGraphicSizeX = 61;
-	static constexpr int kEnemyGraphicSizeY = 100;
+	static constexpr int kEnemyGraphicSizeX = 140;
+	static constexpr int kEnemyGraphicSizeY = 210;
+
+
 public:
 	Enemy();
 	virtual ~Enemy();
 
 	// グラフィックデータ設定
-	void setHandle(int handle) { m_handle = handle; }
+		// グラフィックデータ設定
+	void setHandle(int index, int handle) { m_handle[index] = handle; }
+	//void setHandle(int handle) { m_handle = handle; }
 
 	// プレイヤーの初期化
 	void init();
@@ -32,7 +43,7 @@ public:
 	Vec2 getPos() const { return m_pos; }
 
 private:
-	int m_handle;
+	int m_handle[kEnemyGraphicDivNum];
 
 	//SceneMainのポインタ
 	SceneMain* m_pMain;
@@ -44,4 +55,8 @@ private:
 
 	int m_shotInterval;
 	int m_waitFrame;
+	// キャラクターのアニメーション
+	int m_animeNo;	// 表示する番号
+	int m_animeFrame;
+	int m_dirNo;
 };
