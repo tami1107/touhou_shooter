@@ -15,7 +15,7 @@ namespace
 	//ショットの発射間隔
 	constexpr int kShotInterval = 16;
 	// グラフィックファイル名
-	const char* const kEnemyGraphicFilename = "image/フランアニメーション.png";
+	const char* const kEnemyGraphicFilename = "image/フランアニメーション - コピー.png";
 	const char* const kPlayerGraphicFilename = "image/魔理沙.png";
 	const char* const kPlayerPoint = "image/低速時の中心点.png";
 	const char* const kCirclePoint = "image/低速時のサークルエフェクト.png";
@@ -43,9 +43,6 @@ namespace
 	static constexpr int kEnemyShot1GraphicSizeX = ShotEnemyNormal::kEnemyShot1GraphicSizeX;
 	static constexpr int kEnemyShot1GraphicSizeY = ShotEnemyNormal::kEnemyShot1GraphicSizeY;
 	
-	// エネミーのHP
-	//static constexpr int kPlayerPower = -1;
-
 }
 
 SceneMain::SceneMain()
@@ -106,6 +103,10 @@ void SceneMain::init()
 	m_hSoundEffectHandle1 = LoadSoundMem("soundEffect/選択音.wav");
 	m_hPlayerSoundEffectHandle = LoadSoundMem("soundEffect/ショット時の効果音.mp3");
 	
+	// フレームのロード
+	m_frameHandle = LoadGraph("image/フレーム.png");
+	
+
 
 	for (int i = 0; i < Player::kPlayerGraphicDivNum; i++)
 	{
@@ -127,7 +128,9 @@ void SceneMain::init()
 
 	m_SceneBase.setSoundEffectHandle1(m_hSoundEffectHandle1);
 
-	// プレイヤーの攻撃力
+	
+
+	// エネミーのHP
 	m_hEnemyHP = 100;
 	// グレイズした回数
 	m_GrazePoint = 0;
@@ -153,6 +156,11 @@ void SceneMain::end()
 	DeleteGraph(m_hCircleGraphic);
 	// サウンドアンロード
 	DeleteSoundMem(m_hTestSound);
+
+	// フレームアンロード
+	DeleteGraph(m_frameHandle);
+	DeleteGraph(m_TitleframeHandle);
+
 
 	for (auto& pShot : m_pShotVt)
 	{
@@ -274,7 +282,7 @@ SceneBase* SceneMain::update()
 	if (CheckEnemyShotHit() == true)
 	{
 		// Titleに切り替え
-		return(new SceneTitle);
+		//return(new SceneTitle);
 	}
 
 	if (CheckGraze() == true)
@@ -327,9 +335,14 @@ void SceneMain::draw()
 	// 当たり判定の表示
 	DrawCircle(m_playerPosX, m_playerPosY, kPlayerHitBoxSize,GetColor(255, 255, 255), FALSE);
 	DrawCircle(m_enemyPosX, m_enemyPosY, kEnemyHitBoxSize, GetColor(255, 255, 255), FALSE);
-
+	// フレーム(枠)描画
+	DrawGraph(0, 0, m_frameHandle, TRUE);
 	//現在のグレイズ数を表示
-	DrawFormatString(700, 0, GetColor(255, 255, 255), "Graze:%d", m_GrazePoint);
+	DrawFormatString(600, 261, GetColor(255, 255, 255), ":%d", m_GrazePoint);
+	//test
+	//LoadGraphScreen(0, 0, "image/Ftest.png", TRUE);
+
+
 }
 
 
@@ -449,6 +462,8 @@ bool SceneMain::CheckEnemyShotHit()
 		DrawFormatString(0, 25, GetColor(255, 255, 255), "敵弾の数:%d", m_pShotEnemy1Vt.size());
 		if (dr2 < dl2)
 		{
+			//vectorの要素削除
+			itShotEnemy1 = m_pShotEnemy1Vt.erase(itShotEnemy1);
 			return true;
 		}
 		else

@@ -15,8 +15,8 @@ public:
 	static constexpr int kPlayerGraphicDivNum = kPlayerGraphicDivX * kPlayerGraphicDivY;
 
 	// プレイヤーグラフィックサイズ
-	static constexpr int kPlayerGraphicSizeX = 50;
-	static constexpr int kPlayerGraphicSizeY = 50;
+	static constexpr int kPlayerGraphicSizeX = 209 / kPlayerGraphicDivX;
+	static constexpr int kPlayerGraphicSizeY = 155 / kPlayerGraphicDivY;
 
 	// 中心点("低速時の中心点.png")のグラフィックサイズ
 	static constexpr int kPointHandleSizeX = 16;

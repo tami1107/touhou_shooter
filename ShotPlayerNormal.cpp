@@ -19,15 +19,12 @@ void ShotPlayerNormal::start(Vec2 pos)
 void ShotPlayerNormal::update()
 {
 	
-
 	if (!m_isExist)return;
+	
+	
+
 	m_pos += m_vec;
 
-	
-	
-	
-	
-	
 
 	if (m_pos.y < 0)
 	{
@@ -38,6 +35,8 @@ void ShotPlayerNormal::update()
 void ShotPlayerNormal::draw()
 {
 	if (!m_isExist)return;
+
+	
 	DrawGraphF(m_pos.x , m_pos.y, m_handle, true);
 	
 }

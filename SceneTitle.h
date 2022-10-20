@@ -13,7 +13,7 @@ public:
 	virtual ~SceneTitle() {}
 	
 	
-
+	
 
 	virtual void init() override;
 	virtual void end() override {}
@@ -29,8 +29,11 @@ private:
 	int m_Interval;
 	int m_slide;
 	
+	int m_TitleframeHandle;
 
 	int m_BgmHandle1;
+
+	int m_font;
 
 	bool m_isEnd;
 };

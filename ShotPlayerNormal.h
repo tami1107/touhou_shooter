@@ -35,4 +35,6 @@ public:
 	Vec2 getPos() const { return m_pos; }
 
 	int m_EnemyHit;
+	
+	
 };

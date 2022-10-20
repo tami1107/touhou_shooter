@@ -13,8 +13,8 @@ public:
 	static constexpr int kEnemyGraphicDivNum = kEnemyGraphicDivX * kEnemyGraphicDivY;
 
 	// 敵グラフィックサイズ
-	static constexpr int kEnemyGraphicSizeX = 140;
-	static constexpr int kEnemyGraphicSizeY = 210;
+	static constexpr int kEnemyGraphicSizeX = 504/6;
+	static constexpr int kEnemyGraphicSizeY = 126;
 
 
 public:

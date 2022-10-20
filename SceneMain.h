@@ -97,6 +97,10 @@ private:
 	float m_PlayerPosX;
 	float m_PlayerPosY;
 
+	//フレーム(枠)
+	int m_frameHandle;
+	int m_TitleframeHandle;
+
 public:
 	// プレイヤー
 	Player m_player;

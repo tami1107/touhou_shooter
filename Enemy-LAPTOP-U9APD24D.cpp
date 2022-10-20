@@ -13,7 +13,8 @@ namespace
 	constexpr float kSpeed = 4;
 	//ショットの発射間隔
 	constexpr float kShotInterval = 8.0f;
-
+	//動く間隔
+	constexpr int kMoveTime = 180;
 }
 
 Enemy::Enemy()
@@ -35,51 +36,72 @@ Enemy::~Enemy()
 void Enemy::init()
 {
 	m_pos.x = Game::kScreenWidth / 2 - kEnemyGraphicSizeX / 2;
-	m_pos.y = 0;
+	m_pos.y = 100;
 	m_vec.x = kSpeed;
 	m_vec.y = kSpeed;
 	m_shotInterval = 0;
-	
+	m_waitFrame = kMoveTime;
 }
 
 void Enemy::update()
 {
-	
+	int randShot = GetRand(99);
+	int randMove = GetRand(99);
+
+	// パッド(もしくはキーボード)からの入力を取得する
+	int padState = GetJoypadInputState(DX_INPUT_KEY_PAD1);
+
 	//ショットを撃つ処理
 	m_shotInterval--;
 	if (m_shotInterval < 0)m_shotInterval = 0;
 
 	if (m_shotInterval <= 0)
 	{
-		
-		if (m_pMain->createShotEnemyNormal(getPos()))
+		if (randShot > 50)
 		{
-			m_shotInterval = kShotInterval;
+			/*if (m_pMain->createShotNormal(getPos()))
+			{
+				m_shotInterval = kShotInterval;
+			}*/
+			if (m_pMain->createShotEnemyNormal(getPos()))
+			{
+				m_shotInterval = kShotInterval;
+			}
 		}
-		
-	
+	/*	else if (randShot > 20)
+		{
+			if (m_pMain->createShotBound(getPos()))
+			{
+				m_shotInterval = kShotInterval;
+			}
+		}
+		else
+		{
+			if (m_pMain->createShotFall(getPos()))
+			{
+				m_shotInterval = kShotInterval;
+			}
+		}*/
 	}
 
-	if (m_EnemyHP > 0)
-	{
-		if (m_pos.x < 15)
-		{
-			m_vec.x *= -1;
-		
-		}
-		if (m_pos.x > 450)
-		{
-			m_vec.x *= -1;
-		}
-	}
-	else if(m_EnemyHP < 0)
-	{
-		m_vec.x = 0;
-	}
-	
-	
+	//if (m_waitFrame > 0)
+	//{
+	//	m_waitFrame--;
+	//	return;
+	//}
 
-	
+
+	if (m_pos.x < 0)
+	{
+		m_vec.x *= -1;
+		
+	}
+	if (m_pos.x > Game::kScreenWidth - kEnemyGraphicSizeX)
+	{
+		m_vec.x *= -1;
+		
+	}
+
 	
 
 	m_pos.x += m_vec.x;
@@ -99,6 +121,6 @@ void Enemy::update()
 void Enemy::draw()
 {
 	DrawGraph(static_cast<int>(m_pos.x), static_cast<int>(m_pos.y), m_handle[m_animeNo], true);
-	//敵のHPを表示
-	DrawFormatString(0, 0, GetColor(255, 255, 255), "HP:%d", m_EnemyHP);
+
+	//DrawGraph(m_pos.x, m_pos.y, m_handle, true);
 }
