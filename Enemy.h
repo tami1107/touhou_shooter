@@ -44,6 +44,8 @@ private:
 
 	int m_EnemyHP;
 
+	
+
 	//SceneMain‚Ìƒ|ƒCƒ“ƒ^
 	SceneMain* m_pMain;
 

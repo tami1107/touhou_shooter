@@ -11,8 +11,11 @@ namespace
 	int kAnimeChangeFrame = 6;
 	// X方向、Y方向の速度
 	constexpr float kSpeed = 4;
-	//ショットの発射間隔
+	// ショットの発射間隔
 	constexpr float kShotInterval = 8.0f;
+	// 画面端
+	constexpr int kLeft = 15;
+	constexpr int kRight = 450;
 
 }
 
@@ -22,7 +25,7 @@ Enemy::Enemy()
 	{
 		 handle = -1;
 	}
-	//m_handle = 1;
+	
 	m_pMain = nullptr;
 	m_shotInterval = 0;
 }
@@ -40,6 +43,8 @@ void Enemy::init()
 	m_vec.y = kSpeed;
 	m_shotInterval = 0;
 	
+	
+
 }
 
 void Enemy::update()
@@ -60,27 +65,24 @@ void Enemy::update()
 	
 	}
 
-	if (m_EnemyHP > 0)
-	{
-		if (m_pos.x < 15)
+	
+	
+		if (m_pos.x < kLeft)
 		{
 			m_vec.x *= -1;
 		
 		}
-		if (m_pos.x > 450)
+		if (m_pos.x > kRight)
 		{
 			m_vec.x *= -1;
 		}
-	}
-	else if(m_EnemyHP < 0)
-	{
-		m_vec.x = 0;
-	}
-	
-	
+
 
 	
-	
+
+
+
+
 
 	m_pos.x += m_vec.x;
 
@@ -99,6 +101,7 @@ void Enemy::update()
 void Enemy::draw()
 {
 	DrawGraph(static_cast<int>(m_pos.x), static_cast<int>(m_pos.y), m_handle[m_animeNo], true);
-	//敵のHPを表示
-	DrawFormatString(0, 0, GetColor(255, 255, 255), "HP:%d", m_EnemyHP);
+	//敵のHPを表示(デバッグ)
+	DrawFormatString(100, 100, GetColor(255, 255, 255), "HP:%d", m_EnemyHP);
+	
 }

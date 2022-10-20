@@ -35,7 +35,7 @@ SceneBase* SelectChara::update()
 
 	if (m_SInterval <= 0)
 	{
-		if ((padState & PAD_INPUT_4) && (m_SInterval <= 0))
+		if ((padState & PAD_INPUT_3) && (m_SInterval <= 0))
 		{
 			PlaySoundMem(TEffectsHandle1, DX_PLAYTYPE_BACK);
 			return(new SceneMain);
@@ -63,10 +63,7 @@ SceneBase* SelectChara::update()
 		PlaySoundFile("sound/cursor1.mp3", DX_PLAYTYPE_BACK);
 	}
 	
-	if (padState & PAD_INPUT_3)
-	{
-		return (new SceneTitle);
-	}
+	
 
 	return this;
 }

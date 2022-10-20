@@ -43,6 +43,14 @@ namespace
 	static constexpr int kEnemyShot1GraphicSizeX = ShotEnemyNormal::kEnemyShot1GraphicSizeX;
 	static constexpr int kEnemyShot1GraphicSizeY = ShotEnemyNormal::kEnemyShot1GraphicSizeY;
 	
+	// HPバーの長さ
+	static constexpr int kHPwidth = 480;
+	// エネミーのHP
+	static constexpr int kEnemyHP = 50;
+	// エネミーの最大hp
+	static constexpr int kmaxHP = 50;
+	// カウントダウン(最初)
+	static constexpr int kMaxTime = 50;
 }
 
 SceneMain::SceneMain()
@@ -131,9 +139,20 @@ void SceneMain::init()
 	
 
 	// エネミーのHP
-	m_hEnemyHP = 100;
+	m_hEnemyHP = kEnemyHP;
 	// グレイズした回数
 	m_GrazePoint = 0;
+	// エネミーの最大hp
+	m_maxHP = kmaxHP;
+	
+	//毎フレーム増える
+	m_frameTime = 0;
+	//フレームを秒に換算
+	m_Time = 0;
+	//カウントダウン
+	m_MaxTime = kMaxTime;
+	
+
 }
 
 // 終了処理
@@ -258,8 +277,18 @@ SceneBase* SceneMain::update()
 	}
 
 
+	//フレーム数
+	m_frameTime++;
+	if (m_frameTime > 60)
+	{
+		m_frameTime = 0;
+		m_Time++;
+	}
 
-	if (padState & PAD_INPUT_3)
+	m_CountTime = m_MaxTime - m_Time;
+
+
+	if (padState & PAD_INPUT_2)
 	{
 		// Titleに切り替え
 		return(new SceneTitle);
@@ -282,24 +311,32 @@ SceneBase* SceneMain::update()
 	if (CheckEnemyShotHit() == true)
 	{
 		// Titleに切り替え
-		//return(new SceneTitle);
+		return(new SceneTitle);
 	}
 
 	if (CheckGraze() == true)
 	{
 		m_GrazePoint++;
 	}
-
+	//HP関連
 	m_enemy.setEnemyHP(m_hEnemyHP);
+
+	if (m_hEnemyHP == 0 || m_CountTime == 0)
+	{
+		m_hEnemyHP = 100;
+		m_maxHP = 100;
+		m_MaxTime = 60;
+		m_Time = 0;
+	}
 
 	return this;
 
+	
 }
 
 // 毎フレームの描画
 void SceneMain::draw()
 {
-	
 	// 位置情報の取得
 	//(プレイヤー位置)
 	m_player.getPos();
@@ -313,6 +350,8 @@ void SceneMain::draw()
 
 	m_enemy.draw();
 	m_player.draw();	
+
+	
 	for (auto& pShot : m_pShotVt)
 	{
 		assert(pShot);
@@ -338,11 +377,14 @@ void SceneMain::draw()
 	// フレーム(枠)描画
 	DrawGraph(0, 0, m_frameHandle, TRUE);
 	//現在のグレイズ数を表示
-	DrawFormatString(600, 261, GetColor(255, 255, 255), ":%d", m_GrazePoint);
+	DrawFormatString(605, 261, GetColor(255, 255, 255), "%d", m_GrazePoint);
 	//test
 	//LoadGraphScreen(0, 0, "image/Ftest.png", TRUE);
-
-
+	//カウントダウン
+	DrawFormatString(500, 23, GetColor(255, 255, 255), "%d", m_CountTime);
+	//エネミーのHPバー
+	DrawLine(38, 20, 38 + kHPwidth, 20, GetColor(255, 0, 0), FALSE);//メーターの枠を描画
+	DrawLine(38, 20, 38 + kHPwidth * m_hEnemyHP / m_maxHP, 20, GetColor(255, 255, 255), false);//メーターの中身を描画
 }
 
 
@@ -418,9 +460,11 @@ bool SceneMain::CheckPlayerShotHit()
 		float ar = kPlayerShot1Size + kEnemyHitBoxSize;
 		float dl = ar * ar;
 
+		//プレイヤーのショットの当たり範囲(デバッグ)
 		DrawCircle(m_myShotPosX, m_myShotPosY, kPlayerShot1Size, GetColor(255, 0, 0), FALSE);
-		//現在存在している弾の数を表示
-		DrawFormatString(0, 10, GetColor(255, 255, 255), "自機弾の数:%d", m_pShotPlayer1Vt.size());
+
+		//現在存在している弾の数を表示(デバッグ)
+		//DrawFormatString(0, 10, GetColor(255, 255, 255), "自機弾の数:%d", m_pShotPlayer1Vt.size());
 		if (dr < dl)
 		{
 			//vectorの要素削除
@@ -459,7 +503,7 @@ bool SceneMain::CheckEnemyShotHit()
 
 		DrawCircle(m_enemyShotPosX, m_enemyShotPosY, kEnemyShot1Size, GetColor(255, 0, 0), FALSE);
 		//現在存在している弾の数を表示
-		DrawFormatString(0, 25, GetColor(255, 255, 255), "敵弾の数:%d", m_pShotEnemy1Vt.size());
+		//DrawFormatString(0, 25, GetColor(255, 255, 255), "敵弾の数:%d", m_pShotEnemy1Vt.size());
 		if (dr2 < dl2)
 		{
 			//vectorの要素削除
@@ -512,63 +556,3 @@ bool SceneMain::CheckGraze()
 }
 
 
-
-
-
-//bool SceneMain::createShotFall(Vec2 pos)
-//{
-//	ShotFall* pShot = new ShotFall;
-//	pShot->setHandle(m_hShotGraphic);
-//	pShot->start(pos);
-//	m_pShotVt.push_back(pShot);
-//
-//	return true;
-//}
-//
-//bool SceneMain::createShotBound(Vec2 pos)
-//{
-//	ShotBound* pShot = new ShotBound;
-//	pShot->setHandle(m_hShotGraphic);
-//	pShot->start(pos);
-//	m_pShotVt.push_back(pShot);
-//
-//	return true;
-//}
-
-
-
-
-
-
-
-
-
-
-
-
-//#include "DxLib.h"
-//
-//#include "game.h"
-//#include"SceneMain.h"
-//
-//
-//void SceneMain::init()
-//{
-//	
-//
-//	m_isEnd = false;
-//}
-//
-//
-//SceneBase* SceneMain::update()
-//{
-//	
-//
-//	return this;
-//}
-//
-//void SceneMain::draw()
-//{
-//	m_player.draw();
-//
-//}

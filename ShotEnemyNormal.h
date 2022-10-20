@@ -27,6 +27,9 @@ public:
 	// î•ñ‚Ìæ“¾
 	Vec2 getPos() const { return m_pos; }
 
+	int angle;
+	int speed;
+	int time;
 
 };
 

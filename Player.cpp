@@ -21,7 +21,9 @@ namespace
 	constexpr int kRevolutionSpeed = 10;
 	// 画面端まで行動可能
 	constexpr int kSceneEnd = 7;
-
+	// 画面端
+	constexpr int kLeft = 15;
+	constexpr int kRight = 490;
 }
 
 Player::Player()
@@ -89,26 +91,12 @@ void Player::update()
 				m_shotInterval = kShotInterval;
 			}
 		}
-		/*if (padState & PAD_INPUT_2)
-		{
-			if (m_pMain->createShotBound(getPos()))
-			{
-				m_shotInterval = kShotInterval;
-			}
-		}
-		if (padState & PAD_INPUT_3)
-		{
-			if (m_pMain->createShotFall(getPos()))
-			{
-				m_shotInterval = kShotInterval;
-			}
-		}*/
 	}
 
 
 	if (padState & PAD_INPUT_UP)
 	{
-		if (padState & PAD_INPUT_2) m_pos.y -= (m_vec.y + kSlow);
+		if (padState & PAD_INPUT_4) m_pos.y -= (m_vec.y + kSlow);
 		else m_pos.y -= m_vec.y;
 			
 	
@@ -116,7 +104,7 @@ void Player::update()
 	}
 	if (padState & PAD_INPUT_DOWN)
 	{
-		if (padState & PAD_INPUT_2) m_pos.y += (m_vec.y + kSlow);
+		if (padState & PAD_INPUT_4) m_pos.y += (m_vec.y + kSlow);
 		else m_pos.y += m_vec.y;
 	
 
@@ -125,23 +113,23 @@ void Player::update()
 	if (padState & PAD_INPUT_LEFT)
 	{
 		m_dirNo = 8;
-		if (padState & PAD_INPUT_2) m_pos.x -= (m_vec.x + kSlow);
+		if (padState & PAD_INPUT_4) m_pos.x -= (m_vec.x + kSlow);
 		else m_pos.x -= m_vec.x;
 		
 		
 		
-		if (m_pos.x < 0) m_pos.x = 0 - kSceneEnd;
+		if (m_pos.x < kLeft) m_pos.x = kLeft;
 		
 	}
 	if (padState & PAD_INPUT_RIGHT)
 	{
 		m_dirNo = 4;
-		if (padState & PAD_INPUT_2) m_pos.x += (m_vec.x + kSlow);
+		if (padState & PAD_INPUT_4) m_pos.x += (m_vec.x + kSlow);
 		else m_pos.x += m_vec.x;
 		
-		if (m_pos.x > (Game::kScreenWidth)-(kPlayerGraphicSizeX)) m_pos.x = (Game::kScreenWidth)-(kPlayerGraphicSizeX)+kSceneEnd;
+		if (m_pos.x > (kRight)) m_pos.x = (kRight);
 	}
-	if (padState & PAD_INPUT_2)
+	if (padState & PAD_INPUT_4)
 	{
 		m_push = 1;
 	}
@@ -174,38 +162,4 @@ void Player::draw()
 		DrawRotaGraph2(m_pos.x + (kPlayerGraphicSizeX / 2), m_pos.y + (kPlayerGraphicSizeY / 2), (kCircleHandleSizeX / 2), (kCircleHandleSizeY / 2), 0.8, m_revolution / kRevolutionSpeed / DX_PI, m_circleHandle, TRUE);
 	
 	}
-
-	
-
 }
-
-
-
-
-
-//#include "DxLib.h"
-//
-//#include "game.h"
-//#include"Player.h"
-//
-//
-//void Player::init()
-//{
-//	m_handle = -1;
-//
-//	m_isEnd = false;
-//}
-//
-//
-//SceneBase* Player::update()
-//{
-//
-//
-//	return this;
-//}
-//
-//void Player::draw()
-//{
-//	DrawFormatString(0, 0, GetColor(255, 255, 255), "player");
-//
-//}

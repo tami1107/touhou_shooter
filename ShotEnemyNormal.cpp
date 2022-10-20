@@ -24,18 +24,33 @@ void ShotEnemyNormal::start(Vec2 pos)
 	m_pos.x = pos.x + (kEnemyGraphicSizeX / 2) - (kEnemyShot1GraphicSizeX / 2);
 	m_pos.y = pos.y + (kEnemyGraphicSizeY / 2) - (kEnemyShot1GraphicSizeY / 2);
 
+	angle = 0;
+	time = 0;
 
-	m_vec.x = 0;
-	m_vec.y = kShotSpeed;
+	
+	//m_vec.x = kShotSpeed;
+	//m_vec.y = kShotSpeed;
 }
 
 void ShotEnemyNormal::update()
 {
 	if (!m_isExist)return;
 
+	
 
+	
 
-	m_pos += m_vec;
+	time++;
+	if (time == 10)
+	{
+		angle = GetRand(360) / 360.f * (DX_PI * 2);        //0`PI*2‚Ì—”‚ð¶¬
+		//speed = 0.5f + GetRand(10000) / 10000.f * 2;      //0.5`2.5‚Ì—”‚ð¶¬
+		time = 0;
+	}
+	
+	m_pos.x += cos(angle);      // xÀ•W‚ðXV
+	m_pos.y -= sin(angle) * kShotSpeed;      // yÀ•W‚ðXV
+	
 
 	if (m_pos.y > Game::kScreenHeight)
 	{
@@ -45,6 +60,8 @@ void ShotEnemyNormal::update()
 
 void ShotEnemyNormal::draw()
 {
-	DrawGraphF(m_pos.x, m_pos.y, m_handle, true);
+	DrawGraphF(m_pos.x, m_pos.y, m_handle, TRUE);//’e‚ð•`‰æ
+	
+	//DrawGraphF(m_pos.x, m_pos.y, m_handle, true);
 
 }

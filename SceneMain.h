@@ -101,6 +101,16 @@ private:
 	int m_frameHandle;
 	int m_TitleframeHandle;
 
+	//HP
+	int m_maxHP;
+	
+	// 時間
+	int m_frameTime;
+	int m_Time;
+	int m_MaxTime;
+	int m_CountTime;
+	
+
 public:
 	// プレイヤー
 	Player m_player;
@@ -112,8 +122,8 @@ public:
 	SceneBase m_SceneBase;
 
 	SceneTitle m_SceneTitle;
+
 	// ショット
-	//ShotBase* m_pShot[kShotMax];
 	std::vector<ShotBase*> m_pShotVt;
 
 	std::vector<ShotPlayerNormal*> m_pShotPlayer1Vt;
@@ -130,42 +140,3 @@ public:
 };
 
 
-
-
-
-
-
-//#pragma once
-//#include "SceneBase.h"
-//#include"Player.h"
-//
-//class SceneMain : public SceneBase
-//{
-//public:
-//	SceneMain()
-//	{
-//		m_SelectNum = 0;
-//
-//		m_isEnd = false;
-//	}
-//	virtual ~SceneMain() {}
-//
-//
-//	virtual void init() override;
-//	virtual void end() override {}
-//
-//	virtual SceneBase* update() override;
-//
-//	virtual void draw() override;
-//
-//	virtual bool isEnd() { return m_isEnd; }
-//private:
-//	// テキスト表示位置変更
-//	int m_SelectNum;
-//	int m_Interval;
-//
-//	// プレイヤー
-//	Player m_player;
-//
-//	bool m_isEnd;
-//};
