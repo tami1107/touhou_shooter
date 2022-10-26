@@ -10,6 +10,8 @@
 #include "ShotEnemyNormal.h"
 #include "ShotNormal.h"
 
+
+
 class SceneMain : public SceneBase
 {
 public:
@@ -104,12 +106,17 @@ private:
 	//HP
 	int m_maxHP;
 	
+	//ラウンド
+	int round;
+
 	// 時間
 	int m_frameTime;
 	int m_Time;
 	int m_MaxTime;
 	int m_CountTime;
 	
+	// 自分に弾がヒットしたら弾を消す
+	int m_Hitdelete;
 
 public:
 	// プレイヤー
@@ -118,6 +125,8 @@ public:
 	Enemy m_enemy;
 	// プレイヤーショット
 	ShotPlayerNormal m_ShotPlayerNormal;
+	// エネミーショット
+	ShotEnemyNormal m_ShotEnemyNormal;
 
 	SceneBase m_SceneBase;
 

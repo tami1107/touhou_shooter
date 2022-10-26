@@ -1,7 +1,6 @@
 #include "DxLib.h"
 
 #include "SceneTitle.h"
-#include "SelectChara.h"
 #include "SceneMusic.h"
 #include "SceneMain.h"
 #include "SceneManager.h"
@@ -84,12 +83,12 @@ SceneBase* SceneTitle::update()
 		 if ((padState & PAD_INPUT_3) && (m_Interval <= 0))
 		 {
 			 PlaySoundMem(m_EffectsHandle2, DX_PLAYTYPE_BACK);
-			 // m_SelectNum = 0のとき、3ボタンが押されたらSelectCharaにシーンを移行する
+			 // m_SelectNum = 0のとき、3ボタンが押されたらSceneMainにシーンを移行する
 			 if (m_SelectNum == 0)
 			 {
 				 StopSoundMem(m_BgmHandle1);
 			  // SelectCharaに切り替え
-				 return(new SelectChara);
+				 return(new SceneMain);
 			 }
 			 // m_SelectNum = 1のとき、3ボタンが押されたらSceneMusicにシーンを移行する
 			 if (m_SelectNum == 1)

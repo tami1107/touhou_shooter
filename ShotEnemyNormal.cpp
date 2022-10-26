@@ -6,7 +6,7 @@
 namespace
 {
 	// エネミーの弾速
-	constexpr float kShotSpeed = 10.0f;
+	constexpr float kShotSpeed = 5.0f;
 
 	// 敵グラフィックサイズ
 	static constexpr int kEnemyGraphicSizeX = Enemy::kEnemyGraphicSizeX;
@@ -27,9 +27,9 @@ void ShotEnemyNormal::start(Vec2 pos)
 	angle = 0;
 	time = 0;
 
+	angle = GetRand(DX_PI * 2);        //0～PI*2の乱数を生成
+	//speed = 0.5f + GetRand(10000) / 10000.f * 2;      //0.5～2.5の乱数を生成
 	
-	//m_vec.x = kShotSpeed;
-	//m_vec.y = kShotSpeed;
 }
 
 void ShotEnemyNormal::update()
@@ -40,17 +40,13 @@ void ShotEnemyNormal::update()
 
 	
 
-	time++;
-	if (time == 10)
-	{
-		angle = GetRand(360) / 360.f * (DX_PI * 2);        //0～PI*2の乱数を生成
-		//speed = 0.5f + GetRand(10000) / 10000.f * 2;      //0.5～2.5の乱数を生成
-		time = 0;
-	}
+
 	
-	m_pos.x += cos(angle);      // x座標を更新
-	m_pos.y -= sin(angle) * kShotSpeed;      // y座標を更新
+
+	m_pos.x -= cos(angle);      // x座標を更新
+	m_pos.y -= sin(angle);      // y座標を更新
 	
+
 
 	if (m_pos.y > Game::kScreenHeight)
 	{

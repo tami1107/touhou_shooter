@@ -8,7 +8,7 @@
 #include "ShotPlayerNormal.h"
 #include "ShotEnemyNormal.h"
 #include "Player.h"
-#include "SceneClear.h"
+
 
 namespace
 {
@@ -153,8 +153,6 @@ void SceneMain::init()
 	m_MaxTime = kMaxTime;
 	//自分に弾がヒットしたら弾を消す
 	m_Hitdelete = 0;
-	//ラウンド
-	round = 0;
 
 }
 
@@ -310,8 +308,6 @@ SceneBase* SceneMain::update()
 	// エネミーの弾がプレイヤーに当たった場合、Titleに戻る
 	if (CheckEnemyShotHit() == true)
 	{
-		m_Hitdelete = 1;
-		
 		// Titleに切り替え
 		//return(new SceneTitle);
 	}
@@ -329,11 +325,6 @@ SceneBase* SceneMain::update()
 		m_maxHP = 100;
 		m_MaxTime = 60;
 		m_Time = 0;
-		round++;
-		if (round <= 2)
-		{
-			return(new SceneClear);
-		}
 	}
 
 	return this;

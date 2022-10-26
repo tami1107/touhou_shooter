@@ -54,9 +54,6 @@
     <ClCompile Include="SceneTitle.cpp">
       <Filter>ソース ファイル\Scene.cpp</Filter>
     </ClCompile>
-    <ClCompile Include="SelectChara.cpp">
-      <Filter>ソース ファイル\Scene.cpp</Filter>
-    </ClCompile>
     <ClCompile Include="ShotBase.cpp">
       <Filter>ソース ファイル\Shot.cpp</Filter>
     </ClCompile>
@@ -71,6 +68,12 @@
     </ClCompile>
     <ClCompile Include="ShotEnemyNormal.cpp">
       <Filter>ソース ファイル\Shot.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneClear.cpp">
+      <Filter>ソース ファイル\Scene.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneGameOver.cpp">
+      <Filter>ソース ファイル\Scene.cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -101,9 +104,6 @@
     <ClInclude Include="SceneTitle.h">
       <Filter>ヘッダー ファイル\Scene.h</Filter>
     </ClInclude>
-    <ClInclude Include="SelectChara.h">
-      <Filter>ヘッダー ファイル\Scene.h</Filter>
-    </ClInclude>
     <ClInclude Include="ShotNormal.h">
       <Filter>ヘッダー ファイル\Shot.h</Filter>
     </ClInclude>
@@ -118,6 +118,12 @@
     </ClInclude>
     <ClInclude Include="ShotEnemyNormal.h">
       <Filter>ヘッダー ファイル\Shot.h</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneClear.h">
+      <Filter>ヘッダー ファイル\Scene.h</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneGameOver.h">
+      <Filter>ヘッダー ファイル\Scene.h</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

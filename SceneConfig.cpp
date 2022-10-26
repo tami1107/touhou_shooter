@@ -66,7 +66,7 @@ SceneBase* SceneConfig::update()
 			PlaySoundMem(m_EffectsHandle1, DX_PLAYTYPE_BACK);
 			m_MInterval = kTInterval;
 		}
-		if ((padState & PAD_INPUT_4) && (m_MInterval <= 0))
+		if ((padState & PAD_INPUT_3) && (m_MInterval <= 0))
 		{
 			PlaySoundMem(m_EffectsHandle2, DX_PLAYTYPE_BACK);
 			if (m_SoundSelect == 0)
@@ -83,7 +83,7 @@ SceneBase* SceneConfig::update()
 
 			m_MInterval = kTInterval;
 		}
-		if ((padState & PAD_INPUT_3) && (m_MInterval <= 0))
+		if ((padState & PAD_INPUT_2) && (m_MInterval <= 0))
 		{
 			PlaySoundMem(m_EffectsHandle3, DX_PLAYTYPE_BACK);
 			
@@ -119,23 +119,6 @@ SceneBase* SceneConfig::update()
 
 void SceneConfig::draw()
 {
-	/*m_GHandle1 = LoadGraph("image/ƒŒƒ~ƒŠƒA_’Êí.png");
-	m_GHandle2 = LoadGraph("image/ƒtƒ‰ƒ“_’Êí.png");
-
-	if (m_SoundSelect == 0)
-	{
-		DrawExtendGraph(300, 0, 640, 480, m_GHandle1, TRUE);
-	}
-	if (m_SoundSelect == 1)
-	{
-		DrawExtendGraph(300, 0, 640, 480, m_GHandle2, TRUE);
-	}*/
-
-
-	/*if (CheckSoundFile() == 1)
-	{
-		DrawFormatString(0, 40, GetColor(255, 255, 255), "Ä¶’†");
-	}*/
 
 	for (int i = 0; i < kTitle; i++)
 	{

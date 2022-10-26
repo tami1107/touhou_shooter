@@ -1,16 +1,18 @@
 #pragma once
 #include "SceneBase.h"
 
-class SelectChara : public SceneBase
+class SceneGameOver : public SceneBase
 {
 public:
-	SelectChara()
+	SceneGameOver()
 	{
-		int m_textPosX=0;
-		int m_textVecX=0;
+		m_SelectNum = 0;
+
 		m_isEnd = false;
 	}
-	virtual ~SelectChara() {}
+	virtual ~SceneGameOver() {}
+
+
 
 
 	virtual void init() override;
@@ -23,11 +25,15 @@ public:
 	virtual bool isEnd() { return m_isEnd; }
 private:
 	// テキスト表示位置変更
-	int m_textPosX;
-	int m_textVecX;
+	int m_SelectNum;
+	int m_Interval;
+	int m_slide;
 
-	int m_SInterval;
+	int m_TitleframeHandle;
 
+	int m_BgmHandle1;
+
+	int m_font;
 
 	bool m_isEnd;
 };

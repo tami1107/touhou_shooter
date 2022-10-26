@@ -66,11 +66,11 @@ SceneBase* SceneMusic::update()
 			PlaySoundMem(m_EffectsHandle1, DX_PLAYTYPE_BACK);
 			m_MInterval = kTInterval;
 		}
-		if ((padState & PAD_INPUT_4) && (m_MInterval <= 0))
+		if ((padState & PAD_INPUT_3) && (m_MInterval <= 0))
 		{
 			PlaySoundMem(m_EffectsHandle2, DX_PLAYTYPE_BACK);
 			if (m_SoundSelect == 0)
-			{// 4ボタンが押された瞬間だけ処理
+			{// 3ボタンが押された瞬間だけ処理
 				if (CheckSoundFile() == 0)
 				{
 					PlaySoundFile("soundBgm/亡き王女の為のセプテット.wav", DX_PLAYTYPE_LOOP);
@@ -82,7 +82,7 @@ SceneBase* SceneMusic::update()
 			}
 
 			if (m_SoundSelect == 1)
-			{// 4ボタンが押された瞬間だけ処理
+			{// 3ボタンが押された瞬間だけ処理
 				
 				if (CheckSoundFile() == 0)
 				{
@@ -98,7 +98,7 @@ SceneBase* SceneMusic::update()
 
 			m_MInterval = kTInterval;
 		}
-		if ((padState & PAD_INPUT_3) && (m_MInterval <= 0))
+		if ((padState & PAD_INPUT_2) && (m_MInterval <= 0))
 		{
 			PlaySoundMem(m_EffectsHandle3, DX_PLAYTYPE_BACK);
 			StopSoundFile();
